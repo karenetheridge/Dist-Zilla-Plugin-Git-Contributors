@@ -4,3 +4,5 @@
 /.latest
 /Dist-Zilla-Plugin-Git-Contributors-*/
 /Dist-Zilla-Plugin-Git-Contributors-*.tar.gz
+/tmp/
+/todo/
