@@ -9,6 +9,7 @@ use Moose;
 with 'Dist::Zilla::Role::MetaProvider';
 
 use List::Util 1.33 'none';
+use Git::Wrapper;
 use namespace::autoclean;
 
 has include_authors => (
