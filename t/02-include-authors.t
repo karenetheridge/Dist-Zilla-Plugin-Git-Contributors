@@ -11,10 +11,6 @@ use Path::Tiny;
 use Git::Wrapper;
 use Sort::Versions;
 
-binmode $_, ':utf8' foreach map { Test::Builder->new->$_ } qw(output failure_output todo_output);
-binmode STDOUT, ':utf8';
-binmode STDERR, ':utf8';
-
 my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },
     {
@@ -32,7 +28,7 @@ my $tzil = Builder->from_config(
                     copyright_holder => 'E. Xavier Ample',
                 },
                 [ GatherDir => ],
-                [ 'Git::Contributors' ],
+                [ 'Git::Contributors' => { include_authors => 1 } ],
             ),
             path(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
         },
@@ -60,7 +56,7 @@ $git->commit({ message => 'second commit', author => 'Anon Y. Moose <anon@null.c
 
 $changes->append("- another changelog entry\n");
 $git->add('Changes');
-$git->commit({ message => 'third commit', author => 'Foo Bar <foo@bar.com>' });
+$git->commit({ message => 'third commit', author => '김도형 - Keedi Kim <keedi@example.org>' });
 
 $tzil->chrome->logger->set_debug(1);
 
@@ -74,7 +70,8 @@ cmp_deeply(
     $tzil->distmeta,
     superhashof({
         x_contributors => bag(
-            'Foo Bar <foo@bar.com>',
+            'Anon Y. Moose <anon@null.com>',
+            '김도형 - Keedi Kim <keedi@example.org>',
             'Dagfinn Ilmari Mannsåker <ilmari@example.org>',
         ),
     }),
