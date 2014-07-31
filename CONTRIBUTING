@@ -69,12 +69,24 @@ Once installed, here are some dzil commands you might try:
 
 You can learn more about Dist::Zilla at http://dzil.org/.
 
+The code for this distribution is hosted at GitHub. The repository is:
+https://github.com/karenetheridge/Dist-Zilla-Plugin-Git-Contributors
+You can submit code changes by forking the repository, pushing your code
+changes to your clone, and then submitting a pull request. Detailed
+instructions for doing that is available here:
+
+https://help.github.com/
+https://help.github.com/articles/creating-a-pull-request
 
 If you have found a bug, but do not have an accompanying patch to fix it, you
 can submit an issue report here:
 https://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-Plugin-Git-Contributors
 or via bug-Dist-Zilla-Plugin-Git-Contributors@rt.cpan.org.
-This is a good place to send your questions about the usage of this distribution.
+
+There is also a mailing list available for users of this distribution, at
+http://dzil.org/#mailing-list.
+There is also an irc channel available for users of this distribution, at
+irc://irc.perl.org/#distzilla.
 
 
 This file was generated via Dist::Zilla::Plugin::GenerateFile::ShareDir 0.005 from a
