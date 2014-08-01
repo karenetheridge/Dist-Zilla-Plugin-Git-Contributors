@@ -17,6 +17,18 @@ has include_authors => (
     default => 0,
 );
 
+around dump_config => sub
+{
+    my ($orig, $self) = @_;
+    my $config = $self->$orig;
+
+    $config->{+__PACKAGE__} = {
+        include_authors => $self->include_authors,
+    };
+
+    return $config;
+};
+
 sub metadata
 {
     my $self = shift;

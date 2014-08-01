@@ -32,6 +32,7 @@ my $tzil = Builder->from_config(
                     copyright_holder => 'E. Xavier Ample',
                 },
                 [ GatherDir => ],
+                [ MetaConfig => ],
                 [ 'Git::Contributors' ],
             ),
             path(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
@@ -77,6 +78,20 @@ cmp_deeply(
             'Foo Bar <foo@bar.com>',
             'Dagfinn Ilmari Mannsåker <ilmari@example.org>',
         ),
+        x_Dist_Zilla => superhashof({
+            plugins => supersetof(
+                {
+                    class => 'Dist::Zilla::Plugin::Git::Contributors',
+                    config => {
+                        'Dist::Zilla::Plugin::Git::Contributors' => {
+                            include_authors => 0,
+                        },
+                    },
+                    name => 'Git::Contributors',
+                    version => ignore,
+                },
+            ),
+        }),
     }),
     'contributor names are extracted, with authors not stripped',
 );
