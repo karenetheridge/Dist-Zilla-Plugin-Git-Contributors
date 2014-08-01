@@ -21,7 +21,8 @@ sub metadata
 {
     my $self = shift;
 
-    +{ x_contributors => $self->_contributors }
+    my $contributors = $self->_contributors;
+    @$contributors ? +{ x_contributors => $contributors } : ()
 }
 
 sub _contributors
