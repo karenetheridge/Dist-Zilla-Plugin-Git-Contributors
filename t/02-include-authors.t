@@ -8,8 +8,9 @@ use Test::DZil;
 use Test::Fatal;
 use Test::Deep;
 use Path::Tiny;
-use Git::Wrapper;
-use Sort::Versions;
+
+use lib 't/lib';
+use GitSetup;
 
 my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },
@@ -37,16 +38,7 @@ my $tzil = Builder->from_config(
 );
 
 my $root = path($tzil->tempdir)->child('source');
-diag 'testing with git repo ', $root;
-
-my $git = Git::Wrapper->new($root);
-my $version = $git->version;
-diag 'Testing with git version: ', $version;
-plan skip_all => "Need git v1.5.0 for 'config' subcommand" if versioncmp($git->version, '1.5.0') < 0;
-
-$git->init;
-$git->config('user.name', 'Test User');
-$git->config('user.email', 'test@example.com');
+my $git = git_wrapper($root);
 
 my $changes = $root->child('Changes');
 $changes->spew("Release history for my dist\n\n");
