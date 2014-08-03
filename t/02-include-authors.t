@@ -45,6 +45,8 @@ diag 'Testing with git version: ', $version;
 plan skip_all => "Need git v1.5.0 for 'config' subcommand" if versioncmp($git->version, '1.5.0') < 0;
 
 $git->init;
+$git->config('user.name', 'Test User');
+$git->config('user.email', 'test@example.com');
 
 my $changes = $root->child('Changes');
 $changes->spew("Release history for my dist\n\n");

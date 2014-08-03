@@ -34,6 +34,8 @@ plan skip_all => "Need git v1.5.0 for 'config' subcommand" if versioncmp($git->v
 # if we don't initialize the repo *and* make a commit in it, git will instead
 # find the real distribution repo, not the test one.
 $git->init;
+$git->config('user.name', 'Test User');
+$git->config('user.email', 'test@example.com');
 
 my $changes = $root->child('Changes');
 $changes->spew("Release history for my dist\n\n");

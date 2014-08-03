@@ -3,6 +3,8 @@ Revision history for {{$dist->name}}
 {{$NEXT}}
           - do not add an empty x_contributors key if there are no
             (non-author) contributors to report
+          - fix test failures when run on a system where git has not been
+            configured
 
 0.001     2014-07-31 01:42:08Z
           - Initial release.
