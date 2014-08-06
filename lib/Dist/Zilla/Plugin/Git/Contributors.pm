@@ -46,6 +46,7 @@ sub _contributors
 
     my $git = Git::Wrapper->new('.');
     my @data = $git->shortlog('HEAD', { email => 1, summary => 1});
+    my $err = $git->ERR; $self->log(@$err) if @$err;
 
     my @contributors = map { utf8::decode($_); m/^\s*\d+\s*(.*)$/g; } @data;
 
