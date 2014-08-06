@@ -22,7 +22,7 @@ sub git_wrapper
     my $err = $git->ERR; diag explain @$err if @$err;
 
     diag 'Testing with git version: ', $version;
-    plan skip_all => "Need git v1.5.0 for 'config' subcommand" if versioncmp($git->version, '1.5.0') < 0;
+    plan skip_all => "Need git v1.5.0 for 'config' subcommand" if versioncmp($version, '1.5.0') < 0;
 
     $git->init;
     $err = $git->ERR; diag explain @$err if @$err;
