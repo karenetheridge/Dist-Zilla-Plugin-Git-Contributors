@@ -10,6 +10,8 @@ with 'Dist::Zilla::Role::MetaProvider';
 
 use List::Util 1.33 'none';
 use Git::Wrapper;
+use Try::Tiny;
+use Safe::Isa;
 use namespace::autoclean;
 
 has include_authors => (
@@ -45,6 +47,19 @@ sub _contributors
     my $self = shift;
 
     my $git = Git::Wrapper->new('.');
+
+    # figure out if we're in a git repo or not
+    my $in_repo;
+    try {
+        $in_repo = $git->RUN('status');
+        my $err = $git->ERR; $self->log(@$err) if @$err;
+    }
+    catch {
+        $self->log($_->error) if $_->$_isa('Git::Wrapper::Exception');
+    };
+
+    return [] if not $in_repo;
+
     my @data = $git->shortlog('HEAD', { email => 1, summary => 1});
     my $err = $git->ERR; $self->log(@$err) if @$err;
 

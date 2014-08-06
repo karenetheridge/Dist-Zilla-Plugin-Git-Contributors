@@ -7,6 +7,7 @@ Revision history for {{$dist->name}}
             configured
           - warn at runtime if Pod::Weaver::Section::Contributors is too old
             to pull data from distmeta on its own
+          - do not blow up if run in a directory that is not tracked by git
 
 0.001     2014-07-31 01:42:08Z
           - Initial release.
