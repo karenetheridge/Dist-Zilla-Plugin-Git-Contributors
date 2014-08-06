@@ -34,7 +34,10 @@ sub metadata
     my $self = shift;
 
     my $contributors = $self->_contributors;
-    @$contributors ? +{ x_contributors => $contributors } : ()
+    return if not @$contributors;
+
+    $self->_check_podweaver;
+    +{ x_contributors => $contributors };
 }
 
 sub _contributors
@@ -56,6 +59,16 @@ sub _contributors
     }
 
     return \@contributors;
+}
+
+sub _check_podweaver
+{
+    my $self = shift;
+
+    # check if the module is loaded, not just that it is installed
+    $self->log('WARNING! You appear to be using Pod::Weaver::Section::Contributors, but it is not new enough to take data directly from distmeta. Upgrade to version 0.008!')
+        if eval { Pod::Weaver::Section::Contributors->VERSION(0); 1 }
+            and not eval { Pod::Weaver::Section::Contributors->VERSION(0.007001); 1 };
 }
 
 __PACKAGE__->meta->make_immutable;
