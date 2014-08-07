@@ -8,7 +8,7 @@ Dist::Zilla::Plugin::Git::Contributors - Add contributor names from git to your 
 
 =head1 VERSION
 
-version 0.002
+version 0.003
 
 =head1 SYNOPSIS
 
@@ -30,7 +30,21 @@ distribution metadata.
 =head2 C<include_authors>
 
 By default, distribution authors are removed from the list of extracted git
-contributors. To disable this, set C<include_authors> = 1.
+contributors. To disable this, set C<include_authors = 1>.
+
+=head2 C<include_releaser>
+
+Defaults to true; set to false to remove the current user (who is doing the
+distribution release) from the contributors list. It is applied after
+C<include_authors>, so you will be removed from the list even if you are (one
+of the) distribution author(s) and C<include_authors = 1>.
+
+=for stopwords metacpan
+
+For most distributions, C<< include_authors = 1, include_releaser = 0 >> seems
+to be the right combination of configs to use, particularly for how
+distributions are displayed on L<metacpan|http://metacpan.org>. Perhaps these
+should be the defaults?
 
 =for stopwords canonicalizing
 
