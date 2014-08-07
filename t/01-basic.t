@@ -89,6 +89,7 @@ cmp_deeply(
         }),
     }),
     'contributor names are extracted, with authors not stripped',
-);
+)
+or diag 'got distmeta: ', explain $tzil->distmeta;
 
 done_testing;

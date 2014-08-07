@@ -50,6 +50,7 @@ cmp_deeply(
         !exists $_[0]->{x_contributors} ? 1 : (0, 'x_contributors exists');
     }),
     'no metadata is added when there are no (non-author) contributors found',
-);
+)
+or diag 'got distmeta: ', explain $tzil->distmeta;
 
 done_testing;
