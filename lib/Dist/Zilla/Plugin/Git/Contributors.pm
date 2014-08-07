@@ -179,6 +179,15 @@ described in "MAPPING AUTHORS" in C<git help shortlog>
 You can add the contributor names to your module documentation by using
 L<Pod::Weaver> in conjunction with L<Pod::Weaver::Section::Contributors>.
 
+=head1 UNICODE SUPPORT
+
+=for stopwords ascii
+
+This module aims to properly handle non-ascii characters in contributor names.
+However, on Windows you might need to do a bit more: see
+L<https://github.com/msysgit/msysgit/wiki/Git-for-Windows-Unicode-Support> for
+supported versions and extra configurations you may need to apply.
+
 =head1 SUPPORT
 
 =for stopwords irc
