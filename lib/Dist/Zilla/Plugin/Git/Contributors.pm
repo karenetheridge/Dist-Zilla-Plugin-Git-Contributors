@@ -166,7 +166,7 @@ should be the defaults?
 
 =for stopwords canonicalizing
 
-=head2 CANONICALIZING NAMES AND ADDRESSES
+=head1 CANONICALIZING NAMES AND ADDRESSES
 
 If you or a contributor uses multiple names and/or email addresses to make
 commits and would like them mapped to a canonical value, you can do this by
@@ -174,7 +174,7 @@ adding a F<.mailmap> file to your git repository, with entries formatted as
 described in "MAPPING AUTHORS" in C<git help shortlog>
 (L<https://www.kernel.org/pub/software/scm/git/docs/git-shortlog.html>).
 
-=head2 ADDING CONTRIBUTORS TO POD DOCUMENTATION
+=head1 ADDING CONTRIBUTORS TO POD DOCUMENTATION
 
 You can add the contributor names to your module documentation by using
 L<Pod::Weaver> in conjunction with L<Pod::Weaver::Section::Contributors>.
