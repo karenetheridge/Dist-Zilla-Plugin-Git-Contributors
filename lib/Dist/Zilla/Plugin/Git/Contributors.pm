@@ -42,11 +42,18 @@ sub metadata
     +{ x_contributors => $contributors };
 }
 
+has _git => (
+    is => 'ro',
+    isa => 'Git::Wrapper',
+    lazy => 1,
+    default => sub { Git::Wrapper->new('.') },
+);
+
 sub _contributors
 {
     my $self = shift;
 
-    my $git = Git::Wrapper->new('.');
+    my $git = $self->_git;
 
     # figure out if we're in a git repo or not
     my $in_repo;
