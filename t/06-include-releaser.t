@@ -1,7 +1,6 @@
 use strict;
 use warnings FATAL => 'all';
 
-use utf8;
 use Test::More;
 use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 use Test::DZil;
@@ -21,16 +20,13 @@ my $tzil = Builder->from_config(
                     name     => 'DZT-Sample',
                     abstract => 'Sample DZ Dist',
                     version  => '0.001',
-                    author   => [
-                        'Anon Y. Moose <anon@null.com>',
-                        '김도형 - Keedi Kim <keedi@example.org>',
-                    ],
+                    author   => 'Anne O\'Thor <author@example.com>',
                     license  => 'Perl_5',
-                    copyright_holder => 'E. Xavier Ample',
+                    copyright_holder => 'Anne O\'Thor',
                 },
                 [ GatherDir => ],
                 [ MetaConfig => ],
-                [ 'Git::Contributors' => { include_authors => 1 } ],
+                [ 'Git::Contributors' => { include_releaser => 0 } ],
             ),
             path(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
         },
@@ -40,20 +36,20 @@ my $tzil = Builder->from_config(
 my $root = path($tzil->tempdir)->child('source');
 my $git = git_wrapper($root);
 
+my $releaser = 'Test User <test@example.com>';
+
 my $changes = $root->child('Changes');
 $changes->spew("Release history for my dist\n\n");
 $git->add('Changes');
-$git->commit({ message => 'first commit', author => 'Dagfinn Ilmari Mannsåker <ilmari@example.org>' });
+$git->commit({ message => 'first commit', author => $tzil->authors->[0] });
 
 $changes->append("- a changelog entry\n");
 $git->add('Changes');
-$git->commit({ message => 'second commit', author => 'Anon Y. Moose <anon@null.com>' });
+$git->commit({ message => 'second commit', author => $releaser });
 
-$changes->append("- another changelog entry\n");
+$changes->append("- a changelog entry\n");
 $git->add('Changes');
-$git->commit({ message => 'third commit', author => '김도형 - Keedi Kim <keedi@example.org>' });
-
-$tzil->chrome->logger->set_debug(1);
+$git->commit({ message => 'third commit', author => 'Anon Y. Moose <anon@null.com>' });
 
 is(
     exception { $tzil->build },
@@ -61,13 +57,17 @@ is(
     'build proceeds normally',
 ) or diag 'saw log messages: ', explain $tzil->log_messages;
 
+is(
+    $tzil->plugin_named('Git::Contributors')->_releaser,
+    $releaser,
+    'properly determined the name+email of the current user',
+);
+
 cmp_deeply(
     $tzil->distmeta,
     superhashof({
         x_contributors => bag(
             'Anon Y. Moose <anon@null.com>',
-            '김도형 - Keedi Kim <keedi@example.org>',
-            'Dagfinn Ilmari Mannsåker <ilmari@example.org>',
         ),
         x_Dist_Zilla => superhashof({
             plugins => supersetof(
@@ -75,8 +75,8 @@ cmp_deeply(
                     class => 'Dist::Zilla::Plugin::Git::Contributors',
                     config => {
                         'Dist::Zilla::Plugin::Git::Contributors' => {
-                            include_authors => 1,
-                            include_releaser => 1,
+                            include_authors => 0,
+                            include_releaser => 0,
                         },
                     },
                     name => 'Git::Contributors',
@@ -85,7 +85,8 @@ cmp_deeply(
             ),
         }),
     }),
-    'contributor names are extracted, with authors not stripped',
-);
+    'releaser not included in contributor list (nor author, by default)',
+)
+or diag 'got distmeta: ', explain $tzil->distmeta;
 
 done_testing;

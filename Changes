@@ -1,6 +1,9 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - new 'include_releaser' option, for filtering the releaser user out
+            of the contributor list after 'include_authors' has been applied
+            (include_authors = 1, include_releaser = 0 recommended)
 
 0.002     2014-08-06 05:21:51Z
           - do not add an empty x_contributors key if there are no
