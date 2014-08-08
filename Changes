@@ -5,6 +5,8 @@ Revision history for {{$dist->name}}
             appropriate config options for proper unicode support
           - new "order_by" configuration option, to allow sorting contributors
             by number of commits made, rather than alphabetically
+          - mark "include_releaser" option as experimental, as it will likely
+            get removed if CPAN-API/metacpan-web#1270 gets resolved
 
 0.003     2014-08-07 02:32:19Z
           - new 'include_releaser' option, for filtering the releaser user out

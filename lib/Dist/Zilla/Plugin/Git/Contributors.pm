@@ -165,17 +165,12 @@ are filtered out of the list of contributors.  Defaults to false.
 
 =head2 C<include_releaser>
 
+This option is B<EXPERIMENTAL> and may be removed!
+
 Defaults to true; set to false to remove the current user (who is doing the
 distribution release) from the contributors list. It is applied after
 C<include_authors>, so you will be removed from the list even if you are (one
 of the) distribution author(s) and C<include_authors = 1>.
-
-=for stopwords metacpan
-
-For most distributions, C<< include_authors = 1, include_releaser = 0 >> seems
-to be the right combination of configs to use, particularly for how
-distributions are displayed on L<metacpan|http://metacpan.org>. Perhaps these
-should be the defaults?
 
 =head2 C<order_by>
 
