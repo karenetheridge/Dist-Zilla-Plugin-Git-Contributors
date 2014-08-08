@@ -12,6 +12,10 @@ use Path::Tiny;
 use lib 't/lib';
 use GitSetup;
 
+binmode $_, ':utf8' foreach map { Test::Builder->new->$_ } qw(output failure_output todo_output);
+binmode STDOUT, ':utf8';
+binmode STDERR, ':utf8';
+
 my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },
     {
