@@ -34,8 +34,14 @@ sub git_wrapper
     $git->config('user.name', 'Test User');
     $git->config('user.email', 'test@example.com');
 
-    $git->config('i18n.logoutputencoding', 'utf-8') if $Config{osname} eq 'MSWin32';
-    $git->config('i18n.commitencoding', 'utf-8') if $Config{osname} eq 'MSWin32';
+    # see https://github.com/msysgit/msysgit/wiki/Git-for-Windows-Unicode-Support
+    # and http://ox.no/posts/how-to-combine-git-windows-and-non-ascii-letters
+    if ($Config{osname} eq 'MSWin32')
+    {
+        $git->config('i18n.logoutputencoding', 'utf-8');
+        $git->config('i18n.commitencoding', 'utf-8');
+        $ENV{LESSCHARSET} = 'utf-8';
+    }
 
     $git;
 }
