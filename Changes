@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.004     2014-08-08 01:29:08Z
           - when on MSWin32, check for mysysgit version and also set
             appropriate config options for proper unicode support
           - new "order_by" configuration option, to allow sorting contributors

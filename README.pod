@@ -8,7 +8,7 @@ Dist::Zilla::Plugin::Git::Contributors - Add contributor names from git to your 
 
 =head1 VERSION
 
-version 0.003
+version 0.004
 
 =head1 SYNOPSIS
 
@@ -29,26 +29,27 @@ distribution metadata.
 
 =head2 C<include_authors>
 
-By default, distribution authors are removed from the list of extracted git
-contributors. To disable this, set C<include_authors = 1>.
+When true, authors are added to the list of contributors. When false, authors
+are filtered out of the list of contributors.  Defaults to false.
 
 =head2 C<include_releaser>
+
+This option is B<EXPERIMENTAL> and may be removed!
 
 Defaults to true; set to false to remove the current user (who is doing the
 distribution release) from the contributors list. It is applied after
 C<include_authors>, so you will be removed from the list even if you are (one
 of the) distribution author(s) and C<include_authors = 1>.
 
-=for stopwords metacpan
+=head2 C<order_by>
 
-For most distributions, C<< include_authors = 1, include_releaser = 0 >> seems
-to be the right combination of configs to use, particularly for how
-distributions are displayed on L<metacpan|http://metacpan.org>. Perhaps these
-should be the defaults?
+When C<order_by = name>, contributors are sorted alphabetically
+(ascending); when C<order_by = commits>, contributors are sorted by number of
+commits made to the repository (descending). Th default value is C<name>.
 
 =for stopwords canonicalizing
 
-=head2 CANONICALIZING NAMES AND ADDRESSES
+=head1 CANONICALIZING NAMES AND ADDRESSES
 
 If you or a contributor uses multiple names and/or email addresses to make
 commits and would like them mapped to a canonical value, you can do this by
@@ -56,10 +57,19 @@ adding a F<.mailmap> file to your git repository, with entries formatted as
 described in "MAPPING AUTHORS" in C<git help shortlog>
 (L<https://www.kernel.org/pub/software/scm/git/docs/git-shortlog.html>).
 
-=head2 ADDING CONTRIBUTORS TO POD DOCUMENTATION
+=head1 ADDING CONTRIBUTORS TO POD DOCUMENTATION
 
 You can add the contributor names to your module documentation by using
 L<Pod::Weaver> in conjunction with L<Pod::Weaver::Section::Contributors>.
+
+=head1 UNICODE SUPPORT
+
+=for stopwords ascii
+
+This module aims to properly handle non-ascii characters in contributor names.
+However, on Windows you might need to do a bit more: see
+L<https://github.com/msysgit/msysgit/wiki/Git-for-Windows-Unicode-Support> for
+supported versions and extra configurations you may need to apply.
 
 =head1 SUPPORT
 
