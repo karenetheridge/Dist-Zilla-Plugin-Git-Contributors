@@ -3,6 +3,8 @@ Revision history for {{$dist->name}}
 {{$NEXT}}
           - when on MSWin32, check for mysysgit version and also set
             appropriate config options for proper unicode support
+          - new "order_by" configuration option, to allow sorting contributors
+            by number of commits made, rather than alphabetically
 
 0.003     2014-08-07 02:32:19Z
           - new 'include_releaser' option, for filtering the releaser user out

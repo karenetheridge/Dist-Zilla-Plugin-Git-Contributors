@@ -14,6 +14,7 @@ use Try::Tiny;
 use Safe::Isa;
 use Path::Tiny;
 use Data::Dumper;
+use Moose::Util::TypeConstraints 'enum';
 use namespace::autoclean;
 
 has include_authors => (
@@ -26,6 +27,11 @@ has include_releaser => (
     default => 1,
 );
 
+has order_by => (
+    is => 'ro', isa => enum([qw(name commits)]),
+    default => 'name',
+);
+
 around dump_config => sub
 {
     my ($orig, $self) = @_;
@@ -34,6 +40,7 @@ around dump_config => sub
     $config->{+__PACKAGE__} = {
         include_authors => $self->include_authors,
         include_releaser  => $self->include_releaser,
+        order_by => $self->order_by,
     };
 
     return $config;
@@ -65,7 +72,8 @@ sub _contributors
 
     return [] if not $in_repo;
 
-    my @data = $self->_git(shortlog => 'HEAD', { email => 1, summary => 1 });
+    my @data = $self->_git(shortlog => 'HEAD',
+        { email => 1, summary => 1, ($self->order_by eq 'commits' ? (numbered => 1) : ()) });
 
     my @contributors = map { utf8::decode($_); m/^\s*\d+\s*(.*)$/g; } @data;
 
@@ -168,6 +176,12 @@ For most distributions, C<< include_authors = 1, include_releaser = 0 >> seems
 to be the right combination of configs to use, particularly for how
 distributions are displayed on L<metacpan|http://metacpan.org>. Perhaps these
 should be the defaults?
+
+=head2 C<order_by>
+
+When C<order_by = name>, contributors are sorted alphabetically
+(ascending); when C<order_by = commits>, contributors are sorted by number of
+commits made to the repository (descending). Th default value is C<name>.
 
 =for stopwords canonicalizing
 

@@ -80,6 +80,7 @@ cmp_deeply(
                         'Dist::Zilla::Plugin::Git::Contributors' => {
                             include_authors => 0,
                             include_releaser => 1,
+                            order_by => 'name',
                         },
                     },
                     name => 'Git::Contributors',
