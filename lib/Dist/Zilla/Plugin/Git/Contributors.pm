@@ -147,8 +147,8 @@ distribution metadata.
 
 =head2 C<include_authors>
 
-By default, distribution authors are removed from the list of extracted git
-contributors. To disable this, set C<include_authors = 1>.
+When true, authors are added to the list of contributors. When false, authors
+are filtered out of the list of contributors.  Defaults to false.
 
 =head2 C<include_releaser>
 
