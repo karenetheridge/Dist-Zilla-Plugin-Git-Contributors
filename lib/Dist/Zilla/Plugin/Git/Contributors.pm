@@ -13,6 +13,7 @@ use Git::Wrapper;
 use Try::Tiny;
 use Safe::Isa;
 use Path::Tiny;
+use Data::Dumper;
 use namespace::autoclean;
 
 has include_authors => (
@@ -78,6 +79,9 @@ sub _contributors
     my $err = $git->ERR; $self->log(@$err) if @$err;
 
     my @contributors = map { utf8::decode($_); m/^\s*\d+\s*(.*)$/g; } @data;
+
+    $self->log_debug([ 'extracted contributors from git: %s',
+        sub { Data::Dumper->new([ \@contributors ])->Indent(2)->Terse(1)->Dump } ]);
 
     if (not $self->include_authors)
     {
