@@ -50,24 +50,14 @@ sub metadata
     +{ x_contributors => $contributors };
 }
 
-has _git => (
-    is => 'ro',
-    isa => 'Git::Wrapper',
-    lazy => 1,
-    default => sub { Git::Wrapper->new(path('.')->absolute->stringify) },
-);
-
 sub _contributors
 {
     my $self = shift;
 
-    my $git = $self->_git;
-
     # figure out if we're in a git repo or not
     my $in_repo;
     try {
-        $in_repo = $git->RUN('status');
-        my $err = $git->ERR; $self->log(@$err) if @$err;
+        $in_repo = $self->_git(RUN => 'status');
     }
     catch {
         $self->log($_->error) if $_->$_isa('Git::Wrapper::Exception');
@@ -75,8 +65,7 @@ sub _contributors
 
     return [] if not $in_repo;
 
-    my @data = $git->shortlog('HEAD', { email => 1, summary => 1});
-    my $err = $git->ERR; $self->log(@$err) if @$err;
+    my @data = $self->_git(shortlog => 'HEAD', { email => 1, summary => 1 });
 
     my @contributors = map { utf8::decode($_); m/^\s*\d+\s*(.*)$/g; } @data;
 
@@ -105,13 +94,8 @@ sub _releaser
 {
     my $self = shift;
 
-    my $git = $self->_git;
-
-    my ($username) = $git->config('user.name');
-    my $err = $git->ERR; $self->log(@$err) if @$err;
-
-    my ($email) = $git->config('user.email');
-    $err = $git->ERR; $self->log(@$err) if @$err;
+    my ($username) = $self->_git(config => 'user.name');
+    my ($email) = $self->_git(config => 'user.email');
 
     return if not $username or not $email;
     $username . ' <' . $email . '>';
@@ -125,6 +109,23 @@ sub _check_podweaver
     $self->log('WARNING! You appear to be using Pod::Weaver::Section::Contributors, but it is not new enough to take data directly from distmeta. Upgrade to version 0.008!')
         if eval { Pod::Weaver::Section::Contributors->VERSION(0); 1 }
             and not eval { Pod::Weaver::Section::Contributors->VERSION(0.007001); 1 };
+}
+
+has __git => (
+    is => 'ro',
+    isa => 'Git::Wrapper',
+    lazy => 1,
+    default => sub { Git::Wrapper->new(path('.')->absolute->stringify) },
+);
+
+sub _git
+{
+    my ($self, $command, @args) = @_;
+
+    my $git = $self->__git;
+    my @result = $git->$command(@args);
+    my $err = $git->ERR; $self->log(@$err) if @$err;
+    return @result;
 }
 
 __PACKAGE__->meta->make_immutable;
