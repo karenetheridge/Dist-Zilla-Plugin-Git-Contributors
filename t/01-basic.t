@@ -68,10 +68,10 @@ is(
 cmp_deeply(
     $tzil->distmeta,
     superhashof({
-        x_contributors => bag(
-            'Foo Bar <foo@bar.com>',
+        x_contributors => [
             'Dagfinn Ilmari Mannsåker <ilmari@example.org>',
-        ),
+            'Foo Bar <foo@bar.com>',
+        ],
         x_Dist_Zilla => superhashof({
             plugins => supersetof(
                 {

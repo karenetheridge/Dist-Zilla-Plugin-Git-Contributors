@@ -72,10 +72,10 @@ is(
 cmp_deeply(
     $tzil->distmeta,
     superhashof({
-        x_contributors => bag(
-            'Anon Y. Moose <anon@null.com>',
+        x_contributors => [
             'Anne O\'Thor <author@example.com>',
-        ),
+            'Anon Y. Moose <anon@null.com>',
+        ],
         x_Dist_Zilla => superhashof({
             plugins => supersetof(
                 {

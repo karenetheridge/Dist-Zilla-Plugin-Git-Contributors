@@ -64,11 +64,11 @@ is(
 cmp_deeply(
     $tzil->distmeta,
     superhashof({
-        x_contributors => bag(
+        x_contributors => [
             'Anon Y. Moose <anon@null.com>',
-            '김도형 - Keedi Kim <keedi@example.org>',
             'Dagfinn Ilmari Mannsåker <ilmari@example.org>',
-        ),
+            '김도형 - Keedi Kim <keedi@example.org>',
+        ],
         x_Dist_Zilla => superhashof({
             plugins => supersetof(
                 {
