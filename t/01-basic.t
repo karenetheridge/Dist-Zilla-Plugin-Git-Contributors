@@ -63,7 +63,7 @@ is(
     exception { $tzil->build },
     undef,
     'build proceeds normally',
-) or diag 'saw log messages: ', explain $tzil->log_messages;
+);
 
 cmp_deeply(
     $tzil->distmeta,
@@ -90,7 +90,9 @@ cmp_deeply(
         }),
     }),
     'contributor names are extracted, with authors not stripped',
-)
-or diag 'got distmeta: ', explain $tzil->distmeta;
+) or diag 'got distmeta: ', explain $tzil->distmeta;
+
+diag 'got log messages: ', explain $tzil->log_messages
+    if not Test::Builder->new->is_passing;
 
 done_testing;

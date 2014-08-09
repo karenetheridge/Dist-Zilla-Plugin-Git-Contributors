@@ -48,7 +48,7 @@ foreach my $order_by (qw(name commits))
         exception { $tzil->build },
         undef,
         'build proceeds normally',
-    ) or diag 'saw log messages: ', explain $tzil->log_messages;
+    );
 
     my @contributors = (
         'Anon Y. Moose <anon@null.com>',
@@ -80,8 +80,10 @@ foreach my $order_by (qw(name commits))
             }),
         }),
         'contributor names are sorted by ' . $order_by,
-    )
-    or diag 'got distmeta: ', explain $tzil->distmeta;
+    ) or diag 'got distmeta: ', explain $tzil->distmeta;
+
+    diag 'got log messages: ', explain $tzil->log_messages
+        if not Test::Builder->new->is_passing;
 }
 
 done_testing;

@@ -45,7 +45,7 @@ $Pod::Weaver::Section::Contributors::VERSION = '0.007';
         exception { $tzil->build },
         undef,
         'build proceeds normally',
-    ) or diag 'saw log messages: ', explain $tzil->log_messages;
+    );
 
     cmp_deeply(
         $tzil->log_messages,
@@ -53,7 +53,10 @@ $Pod::Weaver::Section::Contributors::VERSION = '0.007';
             re(qr/^\[Git::Contributors\] WARNING! You appear to ...+ version 0.008!$/),
         ),
         'got a warning about [Contributors] being too old',
-    ) or diag 'saw log messages: ', explain $tzil->log_messages;
+    );
+
+    diag 'got log messages: ', explain $tzil->log_messages
+        if not Test::Builder->new->is_passing;
 }
 
 # now test again using *identical* conditions, except there are no contributor names in distmeta...
@@ -91,13 +94,16 @@ $Pod::Weaver::Section::Contributors::VERSION = '0.007';
         exception { $tzil->build },
         undef,
         'build proceeds normally',
-    ) or diag 'saw log messages: ', explain $tzil->log_messages;
+    );
 
     is(
         (grep { /^\[Git::Contributors\] WARNING! You appear to ...+ version 0.008!$/ } @{$tzil->log_messages}),
         0,
         'got no warning about [Contributors] being too old',
-    ) or diag 'saw log messages: ', explain $tzil->log_messages;
+    );
+
+    diag 'got log messages: ', explain $tzil->log_messages
+        if not Test::Builder->new->is_passing;
 }
 
 done_testing;

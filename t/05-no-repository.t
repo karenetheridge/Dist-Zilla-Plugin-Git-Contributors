@@ -26,10 +26,14 @@ my $tzil = Builder->from_config(
 
 my $root = path($tzil->tempdir)->child('source');
 
+$tzil->chrome->logger->set_debug(1);
 is(
     exception { $tzil->build },
     undef,
     'build proceeds normally',
-) or diag 'saw log messages: ', explain $tzil->log_messages;
+);
+
+diag 'got log messages: ', explain $tzil->log_messages
+    if not Test::Builder->new->is_passing;
 
 done_testing;

@@ -57,11 +57,12 @@ $changes->append("- a changelog entry\n");
 $git->add('Changes');
 $git->commit({ message => 'third commit', author => 'Anon Y. Moose <anon@null.com>' });
 
+$tzil->chrome->logger->set_debug(1);
 is(
     exception { $tzil->build },
     undef,
     'build proceeds normally',
-) or diag 'saw log messages: ', explain $tzil->log_messages;
+);
 
 is(
     $tzil->plugin_named('Git::Contributors')->_releaser,
@@ -94,7 +95,9 @@ cmp_deeply(
         }),
     }),
     'all authors included, except the releaser',
-)
-or diag 'got distmeta: ', explain $tzil->distmeta;
+) or diag 'got distmeta: ', explain $tzil->distmeta;
+
+diag 'got log messages: ', explain $tzil->log_messages
+    if not Test::Builder->new->is_passing;
 
 done_testing;
