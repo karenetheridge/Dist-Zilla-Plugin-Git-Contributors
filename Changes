@@ -1,6 +1,9 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - basic tests are now ascii-only; unicode tests are marked as TODO
+            on MSWin32 for now (see (github) genehack/Git-Wrapper#52 for the
+            gory details)
 
 0.004     2014-08-08 01:29:08Z
           - when on MSWin32, check for mysysgit version and also set

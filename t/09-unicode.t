@@ -16,6 +16,9 @@ binmode $_, ':utf8' foreach map { Test::Builder->new->$_ } qw(output failure_out
 binmode STDOUT, ':utf8';
 binmode STDERR, ':utf8';
 
+local $TODO = 'tests of git commits with unicode do not seem to work yet; see genehack/Git-Wrapper/#52'
+    if $^O eq 'MSWin32';
+
 my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },
     {
@@ -25,16 +28,13 @@ my $tzil = Builder->from_config(
                     name     => 'DZT-Sample',
                     abstract => 'Sample DZ Dist',
                     version  => '0.001',
-                    author   => [
-                        'Anon Y. Moose <anon@null.com>',
-                        '김도형 - Keedi Kim <keedi@example.org>',
-                    ],
+                    author   => 'Anne O\'Thor <author@example.com>',
                     license  => 'Perl_5',
                     copyright_holder => 'E. Xavier Ample',
                 },
                 [ GatherDir => ],
                 [ MetaConfig => ],
-                [ 'Git::Contributors' ],
+                [ 'Git::Contributors' => { include_authors => 1 } ],
             ),
             path(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
         },
@@ -53,11 +53,15 @@ $git->commit({ message => 'first commit', author => $ilmari });
 
 $changes->append("- a changelog entry\n");
 $git->add('Changes');
-$git->commit({ message => 'second commit', author => 'Anon Y. Moose <anon@null.com>' });
+$git->commit({ message => 'second commit', author => 'Anne O\'Thor <author@example.com>' });
 
 $changes->append("- another changelog entry\n");
 $git->add('Changes');
 $git->commit({ message => 'third commit', author => 'Foo Bar <foo@bar.com>' });
+
+$changes->append("- yet another changelog entry\n");
+$git->add('Changes');
+$git->commit({ message => 'fourth commit', author => '김도형 - Keedi Kim <keedi@example.org>', });
 
 $tzil->chrome->logger->set_debug(1);
 
@@ -71,8 +75,10 @@ cmp_deeply(
     $tzil->distmeta,
     superhashof({
         x_contributors => [
+            'Anne O\'Thor <author@example.com>',
             'Dagfinn Ilmari Mannsåker <ilmari@example.org>',
             'Foo Bar <foo@bar.com>',
+            '김도형 - Keedi Kim <keedi@example.org>',
         ],
         x_Dist_Zilla => superhashof({
             plugins => supersetof(
@@ -80,7 +86,7 @@ cmp_deeply(
                     class => 'Dist::Zilla::Plugin::Git::Contributors',
                     config => {
                         'Dist::Zilla::Plugin::Git::Contributors' => {
-                            include_authors => 0,
+                            include_authors => 1,
                             include_releaser => 1,
                             order_by => 'name',
                         },
@@ -91,7 +97,7 @@ cmp_deeply(
             ),
         }),
     }),
-    'contributor names are extracted, with authors not stripped',
+    'contributor names are extracted properly, without mojibake',
 ) or diag 'got distmeta: ', explain $tzil->distmeta;
 
 diag 'got log messages: ', explain $tzil->log_messages
