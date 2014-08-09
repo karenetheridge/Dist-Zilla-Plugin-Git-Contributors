@@ -5,7 +5,6 @@ package GitSetup;
 use Test::More;
 use Git::Wrapper;
 use Sort::Versions;
-use Config;
 
 use parent 'Exporter';
 our @EXPORT = qw(git_wrapper);
@@ -26,7 +25,7 @@ sub git_wrapper
     plan skip_all => "Need git v1.5.0 for 'config' subcommand" if versioncmp($version, '1.5.0') < 0;
 
     plan skip_all => 'Need mysysgit v1.7.10 for proper unicode support on windows (https://github.com/msysgit/msysgit/wiki/Git-for-Windows-Unicode-Support)'
-        if $Config{osname} eq 'MSWin32' and versioncmp($version, '1.7.10') < 0;
+        if $^O eq 'MSWin32' and versioncmp($version, '1.7.10') < 0;
 
     $git->init;
     $err = $git->ERR; diag explain @$err if @$err;
@@ -36,7 +35,7 @@ sub git_wrapper
 
     # see https://github.com/msysgit/msysgit/wiki/Git-for-Windows-Unicode-Support
     # and http://ox.no/posts/how-to-combine-git-windows-and-non-ascii-letters
-    if ($Config{osname} eq 'MSWin32')
+    if ($^O eq 'MSWin32')
     {
         $git->config('i18n.logoutputencoding', 'utf-8');
         $git->config('i18n.commitencoding', 'utf-8');
