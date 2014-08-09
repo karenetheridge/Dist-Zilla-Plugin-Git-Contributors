@@ -61,13 +61,12 @@ sub _contributors
 {
     my $self = shift;
 
-    # figure out if we're in a git repo or not
     my $in_repo;
     try {
         $in_repo = $self->_git(RUN => 'status');
     }
     catch {
-        $self->log($_->error) if $_->$_isa('Git::Wrapper::Exception');
+        $self->log($_->$_isa('Git::Wrapper::Exception') ? $_->error : $_) ;
     };
 
     return [] if not $in_repo;
