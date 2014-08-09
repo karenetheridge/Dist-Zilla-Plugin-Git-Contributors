@@ -57,11 +57,15 @@ $git->commit({ message => 'second commit', author => 'Anne O\'Thor <author@examp
 
 $changes->append("- another changelog entry\n");
 $git->add('Changes');
-$git->commit({ message => 'third commit', author => 'Foo Bar <foo@bar.com>' });
+$git->commit({ message => 'third commit', author => 'Z. Tinman <ztinman@example.com>' });
 
 $changes->append("- yet another changelog entry\n");
 $git->add('Changes');
 $git->commit({ message => 'fourth commit', author => '김도형 - Keedi Kim <keedi@example.org>', });
+
+$changes->append("- still yet another changelog entry\n");
+$git->add('Changes');
+$git->commit({ message => 'fifth commit', author => 'Évelyne Brochu <evelyne@example.com>' });
 
 $tzil->chrome->logger->set_debug(1);
 
@@ -77,7 +81,8 @@ cmp_deeply(
         x_contributors => [
             'Anne O\'Thor <author@example.com>',
             'Dagfinn Ilmari Mannsåker <ilmari@example.org>',
-            'Foo Bar <foo@bar.com>',
+            'Évelyne Brochu <evelyne@example.com>',
+            'Z. Tinman <ztinman@example.com>',
             '김도형 - Keedi Kim <keedi@example.org>',
         ],
         x_Dist_Zilla => superhashof({
@@ -97,7 +102,7 @@ cmp_deeply(
             ),
         }),
     }),
-    'contributor names are extracted properly, without mojibake',
+    'contributor names are extracted properly, without mojibake, with names sorted using unicode collation',
 ) or diag 'got distmeta: ', explain $tzil->distmeta;
 
 diag 'got log messages: ', explain $tzil->log_messages

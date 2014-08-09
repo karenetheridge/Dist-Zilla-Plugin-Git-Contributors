@@ -15,6 +15,7 @@ use Safe::Isa;
 use Path::Tiny;
 use Data::Dumper;
 use Moose::Util::TypeConstraints 'enum';
+use Unicode::Collate;
 use namespace::autoclean;
 
 has include_authors => (
@@ -78,6 +79,8 @@ sub _contributors
 
     $self->log_debug([ 'extracted contributors from git: %s',
         sub { Data::Dumper->new([ \@contributors ])->Indent(2)->Terse(1)->Dump } ]);
+
+    @contributors = Unicode::Collate->new(level => 1)->sort(@contributors) if $self->order_by eq 'name';
 
     if (not $self->include_authors)
     {
