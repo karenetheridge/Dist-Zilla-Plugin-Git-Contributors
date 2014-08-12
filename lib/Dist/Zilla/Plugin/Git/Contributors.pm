@@ -91,9 +91,8 @@ sub _contributors
         } @contributors;
     }
 
-    if (not $self->include_releaser)
+    if (not $self->include_releaser and my $releaser = $self->_releaser)
     {
-        my $releaser = $self->_releaser;
         @contributors = grep { $_ ne $releaser } @contributors;
     }
 
@@ -104,9 +103,11 @@ sub _releaser
 {
     my $self = shift;
 
-    my ($username) = $self->_git(config => 'user.name');
-    my ($email) = $self->_git(config => 'user.email');
-
+    my ( $username, $email );
+    try {
+        ($username) = $self->_git( config => 'user.name' );
+        ($email)    = $self->_git( config => 'user.email' );
+    };
     return if not $username or not $email;
     $username . ' <' . $email . '>';
 }
