@@ -14,6 +14,8 @@ our @EXPORT = qw(git_wrapper);
 sub git_wrapper
 {
     my $root = shift;
+    my $config = shift;
+    $config ||= {};
 
     diag 'testing with git repo ', $root;
 
@@ -30,9 +32,12 @@ sub git_wrapper
     $git->init;
     $err = $git->ERR; diag explain @$err if @$err;
 
-    $git->config('user.name', 'Test User');
-    $git->config('user.email', 'test@example.com');
-
+    ## Don't set up user if  { setup_user => undef }
+    ## otherwise set up user.
+    if ( not exists $config->{setup_user} or $config->{setup_user} ) {
+      $git->config('user.name', 'Test User');
+      $git->config('user.email', 'test@example.com');
+    }
     # see https://github.com/msysgit/msysgit/wiki/Git-for-Windows-Unicode-Support
     # and http://ox.no/posts/how-to-combine-git-windows-and-non-ascii-letters
     if ($^O eq 'MSWin32')
