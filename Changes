@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.005     2014-08-13 00:46:11Z
           - basic tests are now ascii-only; unicode tests are marked as TODO
             on MSWin32 for now (see (github) genehack/Git-Wrapper#52 for the
             gory details)
