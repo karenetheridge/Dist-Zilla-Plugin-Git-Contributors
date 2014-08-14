@@ -15,7 +15,7 @@ use Safe::Isa;
 use Path::Tiny;
 use Data::Dumper;
 use Moose::Util::TypeConstraints 'enum';
-use Unicode::Collate;
+use Unicode::Collate 0.53;
 use namespace::autoclean;
 
 has include_authors => (
