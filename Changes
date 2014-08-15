@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.006     2014-08-15 01:44:00Z
           - increase the minimum required version of Unicode::Collate
           - increase the minimum required version of Git::Wrapper
           - avoid doubly-encoded committer strings on older perls by avoiding
