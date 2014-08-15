@@ -3,6 +3,8 @@ Revision history for {{$dist->name}}
 {{$NEXT}}
           - increase the minimum required version of Unicode::Collate
           - increase the minimum required version of Git::Wrapper
+          - avoid doubly-encoded committer strings on older perls by avoiding
+            encoding the string before we send it to IPC::Open3
 
 0.005     2014-08-13 00:46:11Z
           - basic tests are now ascii-only; unicode tests are marked as TODO

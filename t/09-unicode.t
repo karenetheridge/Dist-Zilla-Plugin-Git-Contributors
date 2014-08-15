@@ -48,7 +48,6 @@ my $changes = $root->child('Changes');
 $changes->spew("Release history for my dist\n\n");
 $git->add('Changes');
 my $ilmari = 'Dagfinn Ilmari Mannsåker <ilmari@example.org>';
-utf8::encode($ilmari);
 $git->commit({ message => 'first commit', author => $ilmari });
 
 $changes->append("- a changelog entry\n");
