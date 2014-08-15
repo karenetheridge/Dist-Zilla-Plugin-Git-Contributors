@@ -103,10 +103,10 @@ sub _releaser
 {
     my $self = shift;
 
-    my ( $username, $email );
+    my ($username, $email);
     try {
-        ($username) = $self->_git( config => 'user.name' );
-        ($email)    = $self->_git( config => 'user.email' );
+        ($username) = $self->_git(config => 'user.name');
+        ($email)    = $self->_git(config => 'user.email');
     };
     return if not $username or not $email;
     $username . ' <' . $email . '>';

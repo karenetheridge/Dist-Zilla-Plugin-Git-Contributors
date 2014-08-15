@@ -4,10 +4,9 @@ use warnings FATAL => 'all';
 use utf8;
 use Test::More;
 use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
-
 use Test::DZil;
 use Test::Fatal;
-use Test::Deep qw( cmp_deeply );
+use Test::Deep;
 use Path::Tiny;
 
 use lib 't/lib';
@@ -36,20 +35,14 @@ my $fakehome = Path::Tiny->tempdir;
 
 $ENV{HOME} = $fakehome->stringify;
 
-my $ini = simple_ini(
-    [ GatherDir  => ],
-    [
-        'Git::Contributors',
-        {
-            include_releaser => 0
-        }
-    ],
-);
 my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },
     {
         add_files => {
-            path(qw(source dist.ini))   => $ini,
+            path(qw(source dist.ini)) => simple_ini(
+                [ GatherDir => ],
+                [ 'Git::Contributors' => { include_releaser => 0 } ],
+            ),
             path(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
         },
     },
@@ -60,20 +53,19 @@ my $git = git_wrapper($root, { setup_user => undef });
 
 my $changes = $root->child('Changes');
 $changes->spew("Release history for my dist\n\n");
+
 {
-
-# Note:
-# We must set these environment variables to coerce git into committing happily.
-# Without them, git will complain about authors and stuff'
-# due to no 'user.name' in either --global or ./
+    # Note:
+    # We must set these environment variables to coerce git into committing happily.
+    # Without them, git will complain about authors and stuff'
+    # due to no 'user.name' in either --global or ./
     local ( $ENV{'GIT_AUTHOR_NAME'}, $ENV{'GIT_COMMITTER_NAME'} )   = ('Anon Y. Mus') x 2;
-
     local ( $ENV{'GIT_AUTHOR_EMAIL'}, $ENV{'GIT_COMMITTER_EMAIL'} ) = ('anonymus@example.org') x 2;
 
     $git->add('Changes');
     $git->commit({ message => 'first commit', author => 'Ilmari <ilmari@example.org>' });
-
 }
+
 $tzil->chrome->logger->set_debug(1);
 
 is(
