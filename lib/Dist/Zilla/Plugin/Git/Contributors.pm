@@ -9,7 +9,7 @@ use Moose;
 with 'Dist::Zilla::Role::MetaProvider';
 
 use List::Util 1.33 'none';
-use Git::Wrapper;
+use Git::Wrapper 0.035;
 use Try::Tiny;
 use Safe::Isa;
 use Path::Tiny;
