@@ -18,6 +18,9 @@ use Moose::Util::TypeConstraints 'enum';
 use Unicode::Collate 0.53;
 use namespace::autoclean;
 
+sub mvp_multivalue_args { qw(paths) }
+sub mvp_aliases { return { path => 'paths' } }
+
 has include_authors => (
     is => 'ro', isa => 'Bool',
     default => 0,
@@ -33,6 +36,14 @@ has order_by => (
     default => 'name',
 );
 
+has paths => (
+    isa => 'ArrayRef[Str]',
+    lazy => 1,
+    default => sub { [] },
+    traits => ['Array'],
+    handles => { paths => 'elements' },
+);
+
 around dump_config => sub
 {
     my ($orig, $self) = @_;
@@ -42,6 +53,7 @@ around dump_config => sub
         include_authors => $self->include_authors,
         include_releaser  => $self->include_releaser,
         order_by => $self->order_by,
+        paths => [ $self->paths ],
     };
 
     return $config;
@@ -72,8 +84,13 @@ sub _contributors
 
     return [] if not $in_repo;
 
-    my @data = $self->_git(shortlog => 'HEAD',
-        { email => 1, summary => 1, ($self->order_by eq 'commits' ? (numbered => 1) : ()) });
+    my @paths = $self->paths;
+    unshift @paths, '--' if @paths;
+
+    my @data = $self->_git(shortlog =>
+        { email => 1, summary => 1, ($self->order_by eq 'commits' ? (numbered => 1) : ()) },
+        'HEAD', @paths,
+    );
 
     my @contributors = map { utf8::decode($_); m/^\s*\d+\s*(.*)$/g; } @data;
 
@@ -181,6 +198,13 @@ When C<order_by = name>, contributors are sorted alphabetically
 (ascending); when C<order_by = commits>, contributors are sorted by number of
 commits made to the repository (descending). Th default value is C<name>.
 
+=head2 C<path>
+
+Indicates a path, relative to the repository root, to search for commits in.
+Technically: "Consider only commits that are enough to explain how the files that match the specified paths came to be."
+Defaults to the repository root. Can be used more than once.
+I<You should almost certainly not need this.>
+
 =for stopwords canonicalizing
 
 =head1 CANONICALIZING NAMES AND ADDRESSES
@@ -224,6 +248,6 @@ I am also usually active on irc, as 'ether' at C<irc.perl.org>.
 * L<Dist::Zilla::Plugin::ContributorsFromPod>
 * L<Module::Install::Contributors>
 
-=for Pod::Coverage metadata
+=for Pod::Coverage mvp_multivalue_args mvp_aliases metadata
 
 =cut

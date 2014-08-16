@@ -29,7 +29,7 @@ my $tzil = Builder->from_config(
                 },
                 [ GatherDir => ],
                 [ MetaConfig => ],
-                [ 'Git::Contributors' ],
+                [ 'Git::Contributors' => { paths => [ 't', 'Changes' ] } ],
             ),
             path(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
         },
@@ -44,12 +44,16 @@ $changes->spew("Release history for my dist\n\n");
 $git->add('Changes');
 $git->commit({ message => 'first commit', author => 'Hey Jude <jude@example.org>' });
 
-$changes->append("- a changelog entry\n");
-$git->add('Changes');
+my $module = $root->child('lib', 'Foo.pm');
+$module->parent->mkpath;
+$module->append("'ohhai'\n");
+$git->add($module->stringify);
 $git->commit({ message => 'second commit', author => 'Anon Y. Moose <anon@null.com>' });
 
-$changes->append("- another changelog entry\n");
-$git->add('Changes');
+my $test = $root->child('t', 'foo.t');
+$test->parent->mkpath;
+$test->spew("use Test::More\npass('ohhai');\n");
+$git->add($test->stringify);
 $git->commit({ message => 'third commit', author => 'Foo Bar <foo@bar.com>' });
 
 $tzil->chrome->logger->set_debug(1);
@@ -72,12 +76,9 @@ cmp_deeply(
                 {
                     class => 'Dist::Zilla::Plugin::Git::Contributors',
                     config => {
-                        'Dist::Zilla::Plugin::Git::Contributors' => {
-                            include_authors => 0,
-                            include_releaser => 1,
-                            order_by => 'name',
-                            paths => [],
-                        },
+                        'Dist::Zilla::Plugin::Git::Contributors' => superhashof({
+                            paths => [ 't', 'Changes' ],
+                        }),
                     },
                     name => 'Git::Contributors',
                     version => ignore,
@@ -85,7 +86,7 @@ cmp_deeply(
             ),
         }),
     }),
-    'contributor names are extracted, with authors not included',
+    'contributor names are extracted, from only the specified path',
 ) or diag 'got distmeta: ', explain $tzil->distmeta;
 
 diag 'got log messages: ', explain $tzil->log_messages

@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - added the new "path" configuration option, for help in building
+            dists contained within a subdirectory of a repository
 
 0.006     2014-08-15 01:44:00Z
           - increase the minimum required version of Unicode::Collate
