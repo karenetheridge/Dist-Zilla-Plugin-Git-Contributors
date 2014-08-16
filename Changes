@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.007     2014-08-16 06:31:41Z
           - added the new "path" configuration option, for help in building
             dists contained within a subdirectory of a repository
 

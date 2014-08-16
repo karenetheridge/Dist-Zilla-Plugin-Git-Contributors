@@ -8,7 +8,7 @@ Dist::Zilla::Plugin::Git::Contributors - Add contributor names from git to your 
 
 =head1 VERSION
 
-version 0.006
+version 0.007
 
 =head1 SYNOPSIS
 
@@ -46,6 +46,13 @@ of the) distribution author(s) and C<include_authors = 1>.
 When C<order_by = name>, contributors are sorted alphabetically
 (ascending); when C<order_by = commits>, contributors are sorted by number of
 commits made to the repository (descending). Th default value is C<name>.
+
+=head2 C<path>
+
+Indicates a path, relative to the repository root, to search for commits in.
+Technically: "Consider only commits that are enough to explain how the files that match the specified paths came to be."
+Defaults to the repository root. Can be used more than once.
+I<You should almost certainly not need this.>
 
 =for stopwords canonicalizing
 
@@ -113,7 +120,7 @@ L<Module::Install::Contributors>
 
 =back
 
-=for Pod::Coverage metadata
+=for Pod::Coverage mvp_multivalue_args mvp_aliases metadata
 
 =head1 AUTHOR
 
