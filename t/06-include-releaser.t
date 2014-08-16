@@ -75,11 +75,9 @@ cmp_deeply(
                 {
                     class => 'Dist::Zilla::Plugin::Git::Contributors',
                     config => {
-                        'Dist::Zilla::Plugin::Git::Contributors' => {
-                            include_authors => 0,
+                        'Dist::Zilla::Plugin::Git::Contributors' => superhashof({
                             include_releaser => 0,
-                            order_by => 'name',
-                        },
+                        }),
                     },
                     name => 'Git::Contributors',
                     version => ignore,

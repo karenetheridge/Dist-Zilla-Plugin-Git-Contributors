@@ -67,11 +67,9 @@ foreach my $order_by (qw(name commits))
                     {
                         class => 'Dist::Zilla::Plugin::Git::Contributors',
                         config => {
-                            'Dist::Zilla::Plugin::Git::Contributors' => {
-                                include_authors => 0,
-                                include_releaser => 1,
+                            'Dist::Zilla::Plugin::Git::Contributors' => superhashof({
                                 order_by => $order_by,
-                            },
+                            }),
                         },
                         name => 'Git::Contributors',
                         version => ignore,
