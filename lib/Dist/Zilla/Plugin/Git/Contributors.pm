@@ -143,7 +143,7 @@ has __git => (
     is => 'ro',
     isa => 'Git::Wrapper',
     lazy => 1,
-    default => sub { Git::Wrapper->new(path('.')->absolute->stringify) },
+    default => sub { Git::Wrapper->new(path(shift->zilla->root)->absolute->stringify) },
 );
 
 sub _git
