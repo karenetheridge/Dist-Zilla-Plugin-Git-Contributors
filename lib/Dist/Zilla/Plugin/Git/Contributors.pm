@@ -180,7 +180,8 @@ distribution metadata.
 
 =head2 C<include_authors>
 
-When true, authors are added to the list of contributors. When false, authors
+When true, authors (as defined by the preamble section in your F<dist.ini>)
+are added to the list of contributors. When false, authors
 are filtered out of the list of contributors.  Defaults to false.
 
 =head2 C<include_releaser>
@@ -212,7 +213,8 @@ I<You should almost certainly not need this.>
 =head1 CANONICALIZING NAMES AND ADDRESSES
 
 If you or a contributor uses multiple names and/or email addresses to make
-commits and would like them mapped to a canonical value, you can do this by
+commits and would like them mapped to a canonical value (e.g. their
+C<cpan.org> address), you can do this by
 adding a F<.mailmap> file to your git repository, with entries formatted as
 described in "MAPPING AUTHORS" in C<git help shortlog>
 (L<https://www.kernel.org/pub/software/scm/git/docs/git-shortlog.html>).
