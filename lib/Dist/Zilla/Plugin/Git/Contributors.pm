@@ -185,12 +185,14 @@ are filtered out of the list of contributors.  Defaults to false.
 
 =head2 C<include_releaser>
 
-This option is B<EXPERIMENTAL> and may be removed!
-
 Defaults to true; set to false to remove the current user (who is doing the
 distribution release) from the contributors list. It is applied after
 C<include_authors>, so you will be removed from the list even if you are (one
 of the) distribution author(s) and C<include_authors = 1>.
+
+You probably don't want this option -- it was added experimentally to change
+how contributors are displayed on L<http://metacpan.org>, but it was decided
+that this should be managed at a different layer than the metadata.
 
 =head2 C<order_by>
 
