@@ -198,7 +198,7 @@ that this should be managed at a different layer than the metadata.
 
 When C<order_by = name>, contributors are sorted alphabetically
 (ascending); when C<order_by = commits>, contributors are sorted by number of
-commits made to the repository (descending). Th default value is C<name>.
+commits made to the repository (descending). The default value is C<name>.
 
 =head2 C<path>
 
