@@ -44,6 +44,11 @@ has paths => (
     handles => { paths => 'elements' },
 );
 
+has mailmap => (
+    is => 'ro',
+    isa => 'Str',
+);
+
 around dump_config => sub
 {
     my ($orig, $self) = @_;
@@ -54,6 +59,7 @@ around dump_config => sub
         include_releaser  => $self->include_releaser,
         order_by => $self->order_by,
         paths => [ $self->paths ],
+        $self->mailmap ? ( mailmap => $self->mailmap ) : (),
     };
 
     return $config;
@@ -92,6 +98,7 @@ sub _contributors
             email => 1,
             summary => 1,
             $self->order_by eq 'commits' ? ( numbered => 1 ) : (),
+            $self->mailmap ? ( '-c' => 'mailmap.file=' . $self->mailmap ) : (),
         },
         'HEAD', @paths,
     );
