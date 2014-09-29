@@ -88,7 +88,11 @@ sub _contributors
     unshift @paths, '--' if @paths;
 
     my @data = $self->_git(shortlog =>
-        { email => 1, summary => 1, ($self->order_by eq 'commits' ? (numbered => 1) : ()) },
+        {
+            email => 1,
+            summary => 1,
+            $self->order_by eq 'commits' ? ( numbered => 1 ) : (),
+        },
         'HEAD', @paths,
     );
 
