@@ -20,7 +20,7 @@ my $tzil = Builder->from_config(
             ),
             path(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
         },
-        tempdir_root => $tempdir,
+        tempdir_root => $tempdir->stringify,
     },
 );
 

@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - fix test that broke with changes in Dist::Zilla::Tester 5.021 (it
+            was my own patch, even!)
 
 0.007     2014-08-16 06:31:41Z
           - added the new "path" configuration option, for help in building
