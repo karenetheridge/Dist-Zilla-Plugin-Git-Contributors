@@ -12,9 +12,9 @@ use Path::Tiny;
 use lib 't/lib';
 use GitSetup;
 
-binmode $_, ':utf8' foreach map { Test::Builder->new->$_ } qw(output failure_output todo_output);
-binmode STDOUT, ':utf8';
-binmode STDERR, ':utf8';
+binmode $_, ':encoding(UTF-8)' foreach map { Test::Builder->new->$_ } qw(output failure_output todo_output);
+binmode STDOUT, ':encoding(UTF-8)';
+binmode STDERR, ':encoding(UTF-8)';
 
 local $TODO = 'tests of git commits with unicode do not seem to work yet; see genehack/Git-Wrapper/#52'
     if $^O eq 'MSWin32';
