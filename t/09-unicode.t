@@ -19,6 +19,7 @@ binmode STDERR, ':utf8';
 local $TODO = 'tests of git commits with unicode do not seem to work yet; see genehack/Git-Wrapper/#52'
     if $^O eq 'MSWin32';
 
+my $tempdir = no_git_tempdir();
 my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },
     {
@@ -38,6 +39,7 @@ my $tzil = Builder->from_config(
             ),
             path(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
         },
+        tempdir_root => $tempdir->stringify,
     },
 );
 

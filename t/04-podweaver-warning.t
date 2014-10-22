@@ -21,6 +21,7 @@ $Pod::Weaver::Section::Contributors::VERSION = '0.007';
 # - when there are no contributor names, no warning is given
 foreach my $have_contributors (1, 0)
 {
+    my $tempdir = no_git_tempdir();
     my $tzil = Builder->from_config(
         { dist_root => 't/does-not-exist' },
         {
@@ -33,6 +34,7 @@ foreach my $have_contributors (1, 0)
                 path(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
                 path(qw(source weaver.ini)) => "[Contributors]\n",
             },
+            tempdir_root => $tempdir->stringify,
         },
     );
 

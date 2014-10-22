@@ -7,8 +7,11 @@ use Test::DZil;
 use Test::Fatal;
 use Path::Tiny;
 
-my $tempdir = Path::Tiny->tempdir(CLEANUP => 1);
-mkdir $tempdir if not -d $tempdir;    # FIXME: File::Temp::newdir doesn't make the directory?!
+use lib 't/lib';
+use GitSetup;
+
+my $tempdir = no_git_tempdir();
+diag 'testing with tempdir ', $tempdir;
 
 my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },

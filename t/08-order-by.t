@@ -13,6 +13,7 @@ use GitSetup;
 
 foreach my $order_by (qw(name commits))
 {
+    my $tempdir = no_git_tempdir();
     my $tzil = Builder->from_config(
         { dist_root => 't/does-not-exist' },
         {
@@ -23,6 +24,7 @@ foreach my $order_by (qw(name commits))
                 ),
                 path(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
             },
+            tempdir_root => $tempdir->stringify,
         },
     );
 

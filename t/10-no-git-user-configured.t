@@ -35,6 +35,7 @@ my $fakehome = Path::Tiny->tempdir;
 
 $ENV{HOME} = $fakehome->stringify;
 
+my $tempdir = no_git_tempdir();
 my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },
     {
@@ -45,6 +46,7 @@ my $tzil = Builder->from_config(
             ),
             path(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
         },
+        tempdir_root => $tempdir->stringify,
     },
 );
 

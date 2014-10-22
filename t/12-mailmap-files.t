@@ -12,6 +12,7 @@ use lib 't/lib';
 use GitSetup;
 
 {
+    my $tempdir = no_git_tempdir();
     my $tzil = Builder->from_config(
         { dist_root => 't/does-not-exist' },
         {
@@ -34,6 +35,7 @@ use GitSetup;
                 path(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
                 path(qw(source .mailmap)) => "Anon Nonny Moose <anonnonny\@moose.org> Anon Y. Moose <anon\@null.com>\n",
             },
+            tempdir_root => $tempdir->stringify,
         },
     );
 

@@ -5,9 +5,42 @@ package GitSetup;
 use Test::More;
 use Git::Wrapper;
 use Sort::Versions;
+use Path::Tiny;
 
 use parent 'Exporter';
-our @EXPORT = qw(git_wrapper);
+our @EXPORT = qw(no_git_tempdir git_wrapper);
+
+# provides a temp directory that is guaranteed to not be inside a git
+# repository
+sub no_git_tempdir
+{
+    my $tempdir = Path::Tiny->tempdir(CLEANUP => 1);
+    mkdir $tempdir if not -d $tempdir;    # FIXME: File::Temp::newdir doesn't make the directory?!
+
+    {
+        my $in_git;
+        my $rootdir = Path::Tiny->rootdir;
+        my $dir = $tempdir;
+        my $count = 0;
+        while ($dir ne $rootdir and $count < 100) {
+            my $checkdir = path($dir, '.git');
+            if (-d $checkdir) {
+                diag "found $checkdir in $tempdir";
+                $in_git = 1;
+                last;
+            }
+            $dir = $dir->parent;
+        }
+        continue {
+            die "too many iterations when traversing $tempdir!"
+                if $count++ > 100;
+        }
+
+        ok(!$in_git, 'tempdir is not in a real git repository');
+    }
+
+    return $tempdir;
+}
 
 # does some preliminary setup of the test Git::Wrapper object
 # and a sanity check
