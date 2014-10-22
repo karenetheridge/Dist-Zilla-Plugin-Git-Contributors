@@ -64,8 +64,7 @@ sub git_wrapper
     $git->init;
     $err = $git->ERR; diag explain @$err if @$err;
 
-    ## Don't set up user if  { setup_user => undef }
-    ## otherwise set up user.
+    # set up user, except if  { setup_user => undef }
     if (not exists $config->{setup_user} or $config->{setup_user}) {
         $git->config('user.name', 'Test User');
         $git->config('user.email', 'test@example.com');
