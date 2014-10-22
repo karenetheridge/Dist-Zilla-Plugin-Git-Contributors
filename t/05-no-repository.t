@@ -24,8 +24,6 @@ my $tzil = Builder->from_config(
     },
 );
 
-my $root = path($tzil->tempdir)->child('source');
-
 $tzil->chrome->logger->set_debug(1);
 is(
     exception { $tzil->build },
