@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.008     2014-10-22 03:30:59Z
           - fix test that broke with changes in Dist::Zilla::Tester 5.021 (it
             was my own patch, even!)
 
