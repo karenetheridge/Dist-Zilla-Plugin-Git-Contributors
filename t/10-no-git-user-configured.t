@@ -30,10 +30,6 @@ use GitSetup;
 # 3. User attempts to do 'dzil build'
 #
 # Because the user never configured user.name, git fatalises.
-#
-my $fakehome = Path::Tiny->tempdir;
-
-$ENV{HOME} = $fakehome->stringify;
 
 my $tempdir = no_git_tempdir();
 my $tzil = Builder->from_config(
