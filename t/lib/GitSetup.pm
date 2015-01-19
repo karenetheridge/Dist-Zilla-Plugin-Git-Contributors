@@ -25,7 +25,7 @@ sub no_git_tempdir
         while ($dir ne $rootdir and $count < 100) {
             my $checkdir = path($dir, '.git');
             if (-d $checkdir) {
-                diag "found $checkdir in $tempdir";
+                note "found $checkdir in $tempdir";
                 $in_git = 1;
                 last;
             }
@@ -49,13 +49,13 @@ sub git_wrapper
     my $root = shift;
     my $config = shift || {};
 
-    diag 'testing with git repo ', $root;
+    diag 'testing with git repo ' . $root;
 
     my $git = Git::Wrapper->new($root);
     my $version = $git->version;
     my $err = $git->ERR; diag explain @$err if @$err;
 
-    diag 'Testing with git version: ', $version;
+    diag 'Testing with git version: ' . $version;
     plan skip_all => "Need git v1.5.0 for 'config' subcommand" if versioncmp($version, '1.5.0') < 0;
 
     plan skip_all => 'Need mysysgit v1.7.10 for proper unicode support on windows (https://github.com/msysgit/msysgit/wiki/Git-for-Windows-Unicode-Support)'

@@ -11,8 +11,6 @@ use lib 't/lib';
 use GitSetup;
 
 my $tempdir = no_git_tempdir();
-diag 'testing with tempdir ', $tempdir;
-
 my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },
     {
