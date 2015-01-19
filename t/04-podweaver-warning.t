@@ -41,9 +41,6 @@ foreach my $have_contributors (1, 0)
     my $root = path($tzil->tempdir)->child('source');
     my $git = git_wrapper($root);
 
-    # if we don't initialize the repo *and* make a commit in it, git will instead
-    # find the real distribution repo, not the test one.
-
     my $changes = $root->child('Changes');
     $changes->spew("Release history for my dist\n\n");
     $git->add('Changes');
