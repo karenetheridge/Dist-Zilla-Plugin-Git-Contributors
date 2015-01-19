@@ -10,8 +10,7 @@ use Path::Tiny;
 use parent 'Exporter';
 our @EXPORT = qw(no_git_tempdir git_wrapper);
 
-# provides a temp directory that is guaranteed to not be inside a git
-# repository
+# provides a temp directory that is guaranteed to not be inside a git repository
 sub no_git_tempdir
 {
     my $tempdir = Path::Tiny->tempdir(CLEANUP => 1);
