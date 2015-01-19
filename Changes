@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.009     2015-01-19 18:42:40Z
           - avoid fatal error when there are no git commits
 
 0.008     2014-10-22 03:30:59Z
