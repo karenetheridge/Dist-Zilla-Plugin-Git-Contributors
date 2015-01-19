@@ -87,14 +87,16 @@ sub _contributors
     my @paths = $self->paths;
     unshift @paths, '--' if @paths;
 
-    my @data = $self->_git(shortlog =>
-        {
-            email => 1,
-            summary => 1,
-            $self->order_by eq 'commits' ? ( numbered => 1 ) : (),
-        },
-        'HEAD', @paths,
-    );
+    my @data = try {
+        $self->_git(shortlog =>
+            {
+                email => 1,
+                summary => 1,
+                $self->order_by eq 'commits' ? ( numbered => 1 ) : (),
+            },
+            'HEAD', @paths,
+        );
+    };
 
     my @contributors = map { utf8::decode($_); m/^\s*\d+\s*(.*)$/g; } @data;
 
