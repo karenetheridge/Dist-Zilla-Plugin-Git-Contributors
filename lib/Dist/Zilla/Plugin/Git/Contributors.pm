@@ -39,7 +39,7 @@ has order_by => (
 has paths => (
     isa => 'ArrayRef[Str]',
     lazy => 1,
-    default => sub { [] },
+    default => sub { [ shift->zilla->root . '' ] },
     traits => ['Array'],
     handles => { paths => 'elements' },
 );
@@ -49,11 +49,13 @@ around dump_config => sub
     my ($orig, $self) = @_;
     my $config = $self->$orig;
 
+    my @paths = $self->paths;
+
     $config->{+__PACKAGE__} = {
         include_authors => $self->include_authors,
         include_releaser  => $self->include_releaser,
         order_by => $self->order_by,
-        paths => [ $self->paths ],
+        paths => [ @paths == 1 ? () : @paths ],
     };
 
     return $config;
@@ -84,9 +86,6 @@ sub _contributors
 
     return [] if not $in_repo;
 
-    my @paths = $self->paths;
-    unshift @paths, '--' if @paths;
-
     my @data = try {
         $self->_git(shortlog =>
             {
@@ -94,7 +93,7 @@ sub _contributors
                 summary => 1,
                 $self->order_by eq 'commits' ? ( numbered => 1 ) : (),
             },
-            'HEAD', @paths,
+            'HEAD', '--', $self->paths,
         );
     };
 
