@@ -107,10 +107,10 @@ sub _contributors
 
     if (not $self->include_authors)
     {
-        my $authors = $self->zilla->authors;
+        my @author_emails = map { /(<[^>]+>)/g } @{ $self->zilla->authors };
         @contributors = grep {
             my $contributor = $_;
-            none { $contributor eq $_ } @$authors;
+            none { $contributor =~ /$_/ } @author_emails;
         } @contributors;
     }
 

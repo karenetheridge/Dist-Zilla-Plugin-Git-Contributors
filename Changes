@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - match authors against committers using email address, rather than
+            using a full exact string match
 
 0.009     2015-01-19 18:42:40Z
           - avoid fatal error when there are no git commits
