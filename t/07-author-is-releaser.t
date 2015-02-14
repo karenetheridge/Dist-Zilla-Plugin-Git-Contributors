@@ -1,5 +1,5 @@
 use strict;
-use warnings FATAL => 'all';
+use warnings;
 
 # this test demonstrates the recommended configuration settings for
 # multi-author distributions, where the releaser is one of the authors.
