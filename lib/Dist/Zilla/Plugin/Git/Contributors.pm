@@ -11,7 +11,6 @@ with 'Dist::Zilla::Role::MetaProvider';
 use List::Util 1.33 'none';
 use Git::Wrapper 0.035;
 use Try::Tiny;
-use Safe::Isa;
 use Path::Tiny;
 use Data::Dumper;
 use Moose::Util::TypeConstraints 'enum';
@@ -81,7 +80,9 @@ sub _contributors
         $in_repo = $self->_git(RUN => 'status');
     }
     catch {
-        $self->log($_->$_isa('Git::Wrapper::Exception') ? $_->error : $_) ;
+        $self->log(
+            blessed($_) && $_->isa('Git::Wrapper::Exception') ? $_->error : $_
+        );
     };
 
     return [] if not $in_repo;
