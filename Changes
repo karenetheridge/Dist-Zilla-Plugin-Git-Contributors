@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.010     2015-02-14 22:01:43Z
           - match authors against committers using email address, rather than
             using a full exact string match
 
