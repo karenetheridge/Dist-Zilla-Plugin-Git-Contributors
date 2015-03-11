@@ -3,7 +3,7 @@ use warnings;
 package Dist::Zilla::Plugin::Git::Contributors;
 # ABSTRACT: Add contributor names from git to your distribution
 # KEYWORDS: plugin distribution metadata git contributors authors commits
-# vim: set ts=8 sw=4 tw=78 et :
+# vim: set ts=8 sts=4 sw=4 tw=78 et :
 
 our $VERSION = '0.011';
 
