@@ -211,6 +211,8 @@ commits made to the repository (descending). The default value is C<name>.
 
 =head2 C<path>
 
+Available since version 0.007.
+
 Indicates a path, relative to the repository root, to search for commits in.
 Technically: "Consider only commits that are enough to explain how the files that match the specified paths came to be."
 Defaults to the repository root. Can be used more than once.
