@@ -1,4 +1,6 @@
-Revision history for Dist-Zilla-Plugin-Git-Contributors
+Revision history for {{$dist->name}}
+
+{{$NEXT}}
 
 0.011     2015-03-21 18:10:36Z
           - new "remove" option, to specify patterns to match for exclusion
