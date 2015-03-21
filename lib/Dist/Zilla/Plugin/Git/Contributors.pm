@@ -19,7 +19,7 @@ use Moose::Util::TypeConstraints 'enum';
 use Unicode::Collate 0.53;
 use namespace::autoclean;
 
-sub mvp_multivalue_args { qw(paths) }
+sub mvp_multivalue_args { qw(paths remove) }
 sub mvp_aliases { return { path => 'paths' } }
 
 has include_authors => (
@@ -45,6 +45,14 @@ has paths => (
     handles => { paths => 'elements' },
 );
 
+has remove => (
+    isa => 'ArrayRef[Str]',
+    lazy => 1,
+    default => sub { [] },
+    traits => ['Array'],
+    handles => { remove => 'elements' },
+);
+
 around dump_config => sub
 {
     my ($orig, $self) = @_;
@@ -57,6 +65,7 @@ around dump_config => sub
         include_releaser  => $self->include_releaser,
         order_by => $self->order_by,
         paths => [ @paths == 1 ? () : @paths ],
+        $self->remove ? ( remove => '...' ) : (),
     };
 
     return $config;
@@ -119,6 +128,13 @@ sub _contributors
     if (not $self->include_releaser and my $releaser = $self->_releaser)
     {
         @contributors = grep { $_ ne $releaser } @contributors;
+    }
+
+    if ($self->remove)
+    {
+        @contributors = grep {
+            my $contributor = $_; none { $contributor =~ /$_/ } $self->remove
+        } @contributors;
     }
 
     return \@contributors;
@@ -217,6 +233,13 @@ Indicates a path, relative to the repository root, to search for commits in.
 Technically: "Consider only commits that are enough to explain how the files that match the specified paths came to be."
 Defaults to the repository root. Can be used more than once.
 I<You should almost certainly not need this.>
+
+=head2 C<remove>
+
+Available since version 0.011.
+
+Any contributor entry matching this regular expression is removed from inclusion.
+Can be used more than once.
 
 =for stopwords canonicalizing
 

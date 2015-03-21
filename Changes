@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - new "remove" option, to specify patterns to match for exclusion
 
 0.010     2015-02-14 22:01:43Z
           - match authors against committers using email address, rather than
