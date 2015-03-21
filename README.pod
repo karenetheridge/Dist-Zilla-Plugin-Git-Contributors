@@ -8,7 +8,7 @@ Dist::Zilla::Plugin::Git::Contributors - Add contributor names from git to your 
 
 =head1 VERSION
 
-version 0.010
+version 0.011
 
 =head1 SYNOPSIS
 
@@ -52,10 +52,19 @@ commits made to the repository (descending). The default value is C<name>.
 
 =head2 C<path>
 
+Available since version 0.007.
+
 Indicates a path, relative to the repository root, to search for commits in.
 Technically: "Consider only commits that are enough to explain how the files that match the specified paths came to be."
 Defaults to the repository root. Can be used more than once.
 I<You should almost certainly not need this.>
+
+=head2 C<remove>
+
+Available since version 0.011.
+
+Any contributor entry matching this regular expression is removed from inclusion.
+Can be used more than once.
 
 =for stopwords canonicalizing
 
