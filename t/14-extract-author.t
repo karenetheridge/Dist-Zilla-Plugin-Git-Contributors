@@ -16,17 +16,12 @@ my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },
     {
         add_files => {
-            path(qw(source dist.ini)) => dist_ini(
-                {
-                    name     => 'DZT-Sample',
-                    abstract => 'Sample DZ Dist',
-                    version  => '0.001',
+            path(qw(source dist.ini)) => simple_ini(
+                {   # merge into root section
                     author   => [
                         'Anon Y. Moose <anon@null.com>',
                         'Torsten Raudssus <torsten@raudss.us> L<https://raudss.us/>',
                     ],
-                    license  => 'Perl_5',
-                    copyright_holder => 'E. Xavier Ample',
                 },
                 [ GatherDir => ],
                 [ MetaConfig => ],

@@ -19,17 +19,12 @@ my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },
     {
         add_files => {
-            path(qw(source dist.ini)) => dist_ini(
-                {
-                    name     => 'DZT-Sample',
-                    abstract => 'Sample DZ Dist',
-                    version  => '0.001',
+            path(qw(source dist.ini)) => simple_ini(
+                {   # merge into root section
                     author   => [
                         'Anne O\'Thor <author@example.com>',
                         'Test User <test@example.com>', # <-- the releaser
                     ],
-                    license  => 'Perl_5',
-                    copyright_holder => 'Anne O\'Thor',
                 },
                 [ GatherDir => ],
                 [ MetaConfig => ],
