@@ -180,7 +180,8 @@ sub _git
 
     my $git = $self->__git;
     my @result = $git->$command(@args);
-    my $err = $git->ERR; $self->log(@$err) if @$err;
+    my $err = $git->ERR;
+    $self->log(@$err) if @$err;
     return @result;
 }
 
