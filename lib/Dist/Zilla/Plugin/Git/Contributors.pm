@@ -149,7 +149,11 @@ sub _releaser
         ($username) = $self->_git(config => 'user.name');
         ($email)    = $self->_git(config => 'user.email');
     };
-    return if not $username or not $email;
+    if (not $username or not $email)
+    {
+        $self->log('could not extract user.name and user.email configs from git');
+        return;
+    }
     $username . ' <' . $email . '>';
 }
 
