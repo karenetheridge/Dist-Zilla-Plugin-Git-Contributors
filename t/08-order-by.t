@@ -74,7 +74,7 @@ foreach my $order_by (qw(name commits))
                             }),
                         },
                         name => 'Git::Contributors',
-                        version => ignore,
+                        version => Dist::Zilla::Plugin::Git::Contributors->VERSION,
                     },
                 ),
             }),

@@ -69,7 +69,7 @@ use GitSetup;
                             },
                         },
                         name => 'Git::Contributors',
-                        version => ignore,
+                        version => Dist::Zilla::Plugin::Git::Contributors->VERSION,
                     },
                 ),
             }),
