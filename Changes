@@ -1,4 +1,4 @@
-Revision history for {{$dist->name}}
+Revision history for Dist-Zilla-Plugin-Git-Contributors
 
 {{$NEXT}}
           - log a warning if user configs are missing
