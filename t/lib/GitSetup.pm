@@ -7,7 +7,7 @@ use Git::Wrapper;
 use Sort::Versions;
 use Path::Tiny;
 
-use parent 'Exporter';
+use Exporter 5.57 'import';
 our @EXPORT = qw(no_git_tempdir git_wrapper);
 
 $ENV{HOME} = Path::Tiny->tempdir->stringify;
