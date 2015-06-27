@@ -283,11 +283,11 @@ I am also usually active on irc, as 'ether' at C<irc.perl.org>.
 
 =for :list
 * L<How I'm using Dist::Zilla to give credit to contributors|http://www.dagolden.com/index.php/1921/how-im-using-distzilla-to-give-credit-to-contributors/>
-* L<Pod::Weaver::Section::Contributors>
-* L<Dist::Zilla::Plugin::Meta::Contributors>
-* L<Dist::Zilla::Plugin::ContributorsFile>
-* L<Dist::Zilla::Plugin::ContributorsFromGit>
-* L<Dist::Zilla::Plugin::ContributorsFromPod>
+* L<Pod::Weaver::Section::Contributors> - weaves x_contributors data into a pod section
+* L<Dist::Zilla::Plugin::Meta::Contributors> - adds an explicit list of names to x_contributors
+* L<Dist::Zilla::Plugin::ContributorsFile> - takes a list of names from a file
+* L<Dist::Zilla::Plugin::ContributorsFromGit> - more dependencies, problematic tests, passes around a lot of extra data in stashes unnecessarily
+* L<Dist::Zilla::Plugin::ContributorsFromPod> - takes the list of contributors from pod
 * L<Module::Install::Contributors>
 
 =for Pod::Coverage mvp_multivalue_args mvp_aliases metadata
