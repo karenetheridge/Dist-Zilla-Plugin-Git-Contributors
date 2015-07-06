@@ -8,7 +8,7 @@ Dist::Zilla::Plugin::Git::Contributors - Add contributor names from git to your 
 
 =head1 VERSION
 
-version 0.011
+version 0.012
 
 =head1 SYNOPSIS
 
@@ -109,23 +109,23 @@ L<How I'm using Dist::Zilla to give credit to contributors|http://www.dagolden.c
 
 =item *
 
-L<Pod::Weaver::Section::Contributors>
+L<Pod::Weaver::Section::Contributors> - weaves x_contributors data into a pod section
 
 =item *
 
-L<Dist::Zilla::Plugin::Meta::Contributors>
+L<Dist::Zilla::Plugin::Meta::Contributors> - adds an explicit list of names to x_contributors
 
 =item *
 
-L<Dist::Zilla::Plugin::ContributorsFile>
+L<Dist::Zilla::Plugin::ContributorsFile> - takes a list of names from a file
 
 =item *
 
-L<Dist::Zilla::Plugin::ContributorsFromGit>
+L<Dist::Zilla::Plugin::ContributorsFromGit> - more dependencies, problematic tests, passes around a lot of extra data in stashes unnecessarily
 
 =item *
 
-L<Dist::Zilla::Plugin::ContributorsFromPod>
+L<Dist::Zilla::Plugin::ContributorsFromPod> - takes the list of contributors from pod
 
 =item *
 
@@ -139,17 +139,17 @@ L<Module::Install::Contributors>
 
 Karen Etheridge <ether@cpan.org>
 
+=head1 CONTRIBUTOR
+
+=for stopwords Kent Fredric
+
+Kent Fredric <kentnl@cpan.org>
+
 =head1 COPYRIGHT AND LICENSE
 
 This software is copyright (c) 2014 by Karen Etheridge.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
-
-=head1 CONTRIBUTOR
-
-=for stopwords Kent Fredric
-
-Kent Fredric <kentnl@cpan.org>
 
 =cut

@@ -1,6 +1,6 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
-{{$NEXT}}
+0.012     2015-07-06 23:35:19Z
           - log a warning if user configs are missing
 
 0.011     2015-03-21 18:10:36Z
