@@ -13,7 +13,7 @@ with 'Dist::Zilla::Role::MetaProvider';
 use List::Util 1.33 'none';
 use Git::Wrapper 0.035;
 use Try::Tiny;
-use Path::Tiny;
+use Path::Tiny 0.048;
 use Data::Dumper;
 use Moose::Util::TypeConstraints 'enum';
 use Unicode::Collate 0.53;
@@ -58,13 +58,16 @@ around dump_config => sub
     my ($orig, $self) = @_;
     my $config = $self->$orig;
 
-    my @paths = $self->paths;
+    my $dist_root = path($self->zilla->root)->realpath;
 
     $config->{+__PACKAGE__} = {
         include_authors => $self->include_authors ? 1 : 0,
         include_releaser  => $self->include_releaser ? 1 : 0,
         order_by => $self->order_by,
-        paths => [ @paths == 1 ? () : @paths ],
+        paths => [ sort map {
+                     my $p = path($_)->realpath;
+                     ($dist_root->subsumes($p) ? $p->relative($dist_root) : $p)->stringify
+                   } $self->paths ],
         $self->remove ? ( remove => '...' ) : (),
     };
 

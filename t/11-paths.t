@@ -74,7 +74,7 @@ cmp_deeply(
                     class => 'Dist::Zilla::Plugin::Git::Contributors',
                     config => {
                         'Dist::Zilla::Plugin::Git::Contributors' => superhashof({
-                            paths => [ 't', 'Changes' ],
+                            paths => [ 'Changes', 't' ],
                         }),
                     },
                     name => 'Git::Contributors',
