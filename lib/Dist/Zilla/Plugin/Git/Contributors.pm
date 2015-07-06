@@ -61,8 +61,8 @@ around dump_config => sub
     my @paths = $self->paths;
 
     $config->{+__PACKAGE__} = {
-        include_authors => $self->include_authors,
-        include_releaser  => $self->include_releaser,
+        include_authors => $self->include_authors ? 1 : 0,
+        include_releaser  => $self->include_releaser ? 1 : 0,
         order_by => $self->order_by,
         paths => [ @paths == 1 ? () : @paths ],
         $self->remove ? ( remove => '...' ) : (),
