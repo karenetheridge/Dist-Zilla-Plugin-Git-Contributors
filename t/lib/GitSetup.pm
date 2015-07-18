@@ -54,7 +54,8 @@ sub git_wrapper
 
     my $git = Git::Wrapper->new($root);
     my $version = $git->version;
-    my $err = $git->ERR; diag explain @$err if @$err;
+    my $err = $git->ERR;
+    diag explain @$err if @$err;
 
     diag 'Testing with git version: ' . $version;
     plan skip_all => "Need git v1.5.0 for 'config' subcommand" if versioncmp($version, '1.5.0') < 0;
@@ -63,7 +64,8 @@ sub git_wrapper
         if $^O eq 'MSWin32' and versioncmp($version, '1.7.10') < 0;
 
     $git->init;
-    $err = $git->ERR; diag explain @$err if @$err;
+    $err = $git->ERR;
+    diag explain @$err if @$err;
 
     # set up user, except if  { setup_user => undef }
     if (not exists $config->{setup_user} or $config->{setup_user}) {
