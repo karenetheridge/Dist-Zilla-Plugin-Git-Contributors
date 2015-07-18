@@ -44,8 +44,7 @@ my $git = git_wrapper($root);
 my $changes = $root->child('Changes');
 $changes->spew("Release history for my dist\n\n");
 $git->add('Changes');
-my $ilmari = 'Dagfinn Ilmari Mannsåker <ilmari@example.org>';
-$git->commit({ message => 'first commit', author => $ilmari });
+$git->commit({ message => 'first commit', author => 'Dagfinn Ilmari Mannsåker <ilmari@example.org>' });
 
 $changes->append("- a changelog entry\n");
 $git->add('Changes');
