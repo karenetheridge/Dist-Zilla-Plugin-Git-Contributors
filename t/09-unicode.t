@@ -98,6 +98,9 @@ cmp_deeply(
     'contributor names are extracted properly, without mojibake, with names sorted using unicode collation',
 ) or diag 'got distmeta: ', explain $tzil->distmeta;
 
+diag 'extracted contributors: ', explain $tzil->distmeta->{x_contributors}
+    if $^O eq 'MSWin32';
+
 diag 'got log messages: ', explain $tzil->log_messages
     if not Test::Builder->new->is_passing;
 
