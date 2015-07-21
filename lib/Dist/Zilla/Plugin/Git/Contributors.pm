@@ -14,7 +14,6 @@ use List::Util 1.33 'none';
 use Git::Wrapper 0.035;
 use Try::Tiny;
 use Path::Tiny 0.048;
-use Data::Dumper;
 use Moose::Util::TypeConstraints 'enum';
 use Unicode::Collate 0.53;
 use namespace::autoclean;
@@ -115,7 +114,7 @@ sub _contributors
     my @contributors = map { utf8::decode($_); m/^\s*\d+\s*(.*)$/g; } @data;
 
     $self->log_debug([ 'extracted contributors from git: %s',
-        sub { Data::Dumper->new([ \@contributors ])->Indent(2)->Terse(1)->Dump } ]);
+        sub { require Data::Dumper; Data::Dumper->new([ \@contributors ])->Indent(2)->Terse(1)->Dump } ]);
 
     @contributors = Unicode::Collate->new(level => 1)->sort(@contributors) if $self->order_by eq 'name';
 
