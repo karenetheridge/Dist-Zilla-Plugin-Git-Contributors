@@ -123,7 +123,7 @@ sub _contributors
         my @author_emails = map { /(<[^>]+>)/g } @{ $self->zilla->authors };
         @contributors = grep {
             my $contributor = $_;
-            none { $contributor =~ /$_/ } @author_emails;
+            none { $contributor =~ /\Q$_\E/ } @author_emails;
         } @contributors;
     }
 
@@ -135,7 +135,7 @@ sub _contributors
     if ($self->remove)
     {
         @contributors = grep {
-            my $contributor = $_; none { $contributor =~ /$_/ } $self->remove
+            my $contributor = $_; none { $contributor =~ /\Q$_\E/ } $self->remove
         } @contributors;
     }
 

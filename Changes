@@ -1,6 +1,8 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
 {{$NEXT}}
+          - use quotemeta() in regular expressions, to avoid choking when a
+            contributor name contains special characters
 
 0.012     2015-07-06 23:35:19Z
           - log a warning if user configs are missing

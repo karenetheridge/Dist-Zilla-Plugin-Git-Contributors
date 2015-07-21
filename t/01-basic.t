@@ -21,6 +21,7 @@ my $tzil = Builder->from_config(
                     author   => [
                         'Anon Y. Moose <anon@null.com>',
                         'Anne O\'Thor <author@example.com>',
+                        'Tokuhiro Matsuno <tokuhirom @*(#RJKLFHFSDLJF gmail.com>',
                     ],
                 },
                 [ GatherDir => ],
