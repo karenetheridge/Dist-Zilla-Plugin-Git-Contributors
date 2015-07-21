@@ -1,5 +1,7 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
+{{$NEXT}}
+
 0.013     2015-07-21 01:55:31Z
           - use quotemeta() in regular expressions, to avoid choking when a
             contributor name contains special characters
