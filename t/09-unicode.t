@@ -30,7 +30,7 @@ my $tzil = Builder->from_config(
                 },
                 [ GatherDir => ],
                 [ MetaConfig => ],
-                [ 'Git::Contributors' => { include_authors => 1 } ],
+                [ 'Git::Contributors' => { include_authors => 1, include_releaser => 0 } ],
             ),
             path(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
         },
@@ -39,7 +39,7 @@ my $tzil = Builder->from_config(
 );
 
 my $root = path($tzil->tempdir)->child('source');
-my $git = git_wrapper($root);
+my $git = git_wrapper($root, { 'user.name' => 'Olivier Mengué', 'user.email' => 'dolmen@cpan.org' });
 
 my $changes = $root->child('Changes');
 $changes->spew("Release history for my dist\n\n");
@@ -61,6 +61,10 @@ $git->commit({ message => 'fourth commit', author => '김도형 - Keedi Kim <kee
 $changes->append("- still yet another changelog entry\n");
 $git->add('Changes');
 $git->commit({ message => 'fifth commit', author => 'Évelyne Brochu <evelyne@example.com>' });
+
+$changes->append("- commit from the releaser\n");
+$git->add('Changes');
+$git->commit({ message => 'sixth commit', author => 'Olivier Mengué <dolmen@cpan.org>' });
 
 $tzil->chrome->logger->set_debug(1);
 
@@ -87,6 +91,7 @@ cmp_deeply(
                     config => {
                         'Dist::Zilla::Plugin::Git::Contributors' => superhashof({
                             include_authors => 1,
+                            include_releaser => 0,
                         }),
                     },
                     name => 'Git::Contributors',

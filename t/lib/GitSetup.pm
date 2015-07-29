@@ -67,11 +67,12 @@ sub git_wrapper
     $err = $git->ERR;
     diag explain @$err if @$err;
 
-    # set up user, except if  { setup_user => undef }
+    # allow overriding configs, or skipping entirely
     if (not exists $config->{setup_user} or $config->{setup_user}) {
-        $git->config('user.name', 'Test User');
-        $git->config('user.email', 'test@example.com');
+        $git->config('user.name', $config->{'user.name'} || 'Test User');
+        $git->config('user.email', $config->{'user.email'} || 'test@example.com');
     }
+
     # see https://github.com/msysgit/msysgit/wiki/Git-for-Windows-Unicode-Support
     # and http://ox.no/posts/how-to-combine-git-windows-and-non-ascii-letters
     if ($^O eq 'MSWin32')

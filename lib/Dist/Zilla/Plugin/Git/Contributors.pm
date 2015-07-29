@@ -156,6 +156,8 @@ sub _releaser
         $self->log('could not extract user.name and user.email configs from git');
         return;
     }
+    utf8::decode($username);
+    utf8::decode($email);
     $username . ' <' . $email . '>';
 }
 
