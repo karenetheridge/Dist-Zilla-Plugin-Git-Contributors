@@ -96,12 +96,20 @@ cmp_deeply(
         }),
     }),
     'contributor names are extracted properly, without mojibake, with names sorted using unicode collation',
-) or diag 'got distmeta: ', explain $tzil->distmeta;
+) or real_diag('got distmeta: ', explain $tzil->distmeta);
 
-diag 'extracted contributors: ', explain $tzil->distmeta->{x_contributors}
+real_diag('extracted contributors: ', explain $tzil->distmeta->{x_contributors})
     if $^O eq 'MSWin32';
 
-diag 'got log messages: ', explain $tzil->log_messages
+real_diag('got log messages: ', explain $tzil->log_messages)
     if not Test::Builder->new->is_passing;
 
 done_testing;
+
+# diag uses todo_output if in_todo :/
+sub real_diag
+{
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    my $tb = Test::Builder->new;
+    $tb->_print_comment($tb->failure_output, @_);
+}
