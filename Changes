@@ -1,6 +1,6 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
-{{$NEXT}}
+0.014     2015-07-29 02:33:55Z
           - when include_releaser = 0, utf8-decode the releaser name before
             matching it against the list of contributors
 
