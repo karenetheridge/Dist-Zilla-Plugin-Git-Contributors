@@ -68,6 +68,7 @@ around dump_config => sub
                      ($dist_root->subsumes($p) ? $p->relative($dist_root) : $p)->stringify
                    } $self->paths ],
         $self->remove ? ( remove => '...' ) : (),
+        blessed($self) ne __PACKAGE__ ? ( version => $VERSION ) : (),
     };
 
     return $config;
