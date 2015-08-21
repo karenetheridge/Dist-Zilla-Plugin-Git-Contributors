@@ -112,7 +112,7 @@ sub _contributors
         );
     };
 
-    my @contributors = map { utf8::decode($_); m/^\s*\d+\s*(.*)$/g; } @data;
+    my @contributors = map { m/^\s*\d+\s*(.*)$/g; } @data;
 
     $self->log_debug([ 'extracted contributors from git: %s',
         sub { require Data::Dumper; Data::Dumper->new([ \@contributors ])->Indent(2)->Terse(1)->Dump } ]);
@@ -157,8 +157,6 @@ sub _releaser
         $self->log('could not extract user.name and user.email configs from git');
         return;
     }
-    utf8::decode($username);
-    utf8::decode($email);
     $username . ' <' . $email . '>';
 }
 
@@ -187,6 +185,9 @@ sub _git
     my @result = $git->$command(@args);
     my $err = $git->ERR;
     $self->log(@$err) if @$err;
+    # TODO Git::Wrapper should really be decoding this for us, via a new
+    # (defaulting-to-false) utf8 flag
+    utf8::decode($_) foreach @result;
     return @result;
 }
 
