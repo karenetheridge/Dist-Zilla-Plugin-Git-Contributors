@@ -19,6 +19,14 @@ binmode STDERR, ':encoding(UTF-8)';
 local $TODO = 'tests of git commits with unicode do not seem to work yet; see genehack/Git-Wrapper/#52'
     if $^O eq 'MSWin32';
 
+# diag uses todo_output if in_todo :/
+no warnings 'redefine';
+*::diag = sub {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    my $tb = Test::Builder->new;
+    $tb->_print_comment($tb->failure_output, @_);
+};
+
 my $tempdir = no_git_tempdir();
 my $tzil = Builder->from_config(
     { dist_root => 'does-not-exist' },
@@ -101,20 +109,12 @@ cmp_deeply(
         }),
     }),
     'contributor names are extracted properly, without mojibake, with names sorted using unicode collation',
-) or real_diag('got distmeta: ', explain $tzil->distmeta);
+) or diag 'got distmeta: ', explain $tzil->distmeta;
 
-real_diag('extracted contributors: ', explain $tzil->distmeta->{x_contributors})
+diag 'extracted contributors: ', explain $tzil->distmeta->{x_contributors}
     if $^O eq 'MSWin32';
 
-real_diag('got log messages: ', explain $tzil->log_messages)
+diag('got log messages: ', explain $tzil->log_messages
     if not Test::Builder->new->is_passing;
 
 done_testing;
-
-# diag uses todo_output if in_todo :/
-sub real_diag
-{
-    local $Test::Builder::Level = $Test::Builder::Level + 1;
-    my $tb = Test::Builder->new;
-    $tb->_print_comment($tb->failure_output, @_);
-}
