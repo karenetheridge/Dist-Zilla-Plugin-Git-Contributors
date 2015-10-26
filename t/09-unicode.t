@@ -114,7 +114,7 @@ cmp_deeply(
 diag 'extracted contributors: ', explain $tzil->distmeta->{x_contributors}
     if $^O eq 'MSWin32';
 
-diag('got log messages: ', explain $tzil->log_messages
+diag('got log messages: ', explain $tzil->log_messages)
     if not Test::Builder->new->is_passing;
 
 done_testing;
