@@ -140,7 +140,15 @@ sub _contributors
         } @contributors;
     }
 
-    return \@contributors;
+    # preserve the order to keep existing unit test happy.
+    my @unique_contributors;
+    my $seen_contributors;
+    foreach (@contributors) {
+        next if (exists $seen_contributors->{uc($_)});
+        push @unique_contributors, $_;
+        $seen_contributors->{uc($_)} = 1;
+    }
+    return \@unique_contributors;
 }
 
 sub _releaser
