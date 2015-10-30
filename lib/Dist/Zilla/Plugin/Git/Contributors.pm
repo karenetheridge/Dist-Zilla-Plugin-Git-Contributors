@@ -13,7 +13,7 @@ with 'Dist::Zilla::Role::MetaProvider';
 use List::Util 1.33 'none';
 use Git::Wrapper 0.035;
 use Try::Tiny;
-use Path::Tiny 0.048;
+use Path::Tiny 0.071;
 use Moose::Util::TypeConstraints 'enum';
 use List::UtilsBy 0.04 'uniq_by';
 use Unicode::Collate 0.53;
