@@ -1,6 +1,8 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
 {{$NEXT}}
+          - duplicates entries are removed, using the email address as the
+            unique key
 
 0.014     2015-07-29 02:33:55Z
           - when include_releaser = 0, utf8-decode the releaser name before

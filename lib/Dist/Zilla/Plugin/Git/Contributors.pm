@@ -15,6 +15,7 @@ use Git::Wrapper 0.035;
 use Try::Tiny;
 use Path::Tiny 0.048;
 use Moose::Util::TypeConstraints 'enum';
+use List::UtilsBy 0.04 'uniq_by';
 use Unicode::Collate 0.53;
 use namespace::autoclean;
 
@@ -116,6 +117,9 @@ sub _contributors
 
     $self->log_debug([ 'extracted contributors from git: %s',
         sub { require Data::Dumper; Data::Dumper->new([ \@contributors ])->Indent(2)->Terse(1)->Dump } ]);
+
+    # remove duplicates by email address, keeping the latest associated name
+    @contributors = uniq_by { (/(<[^>]+>)/g)[-1] } @contributors;
 
     @contributors = Unicode::Collate->new(level => 1)->sort(@contributors) if $self->order_by eq 'name';
 
@@ -262,6 +266,9 @@ C<cpan.org> address), you can do this by
 adding a F<.mailmap> file to your git repository, with entries formatted as
 described in "MAPPING AUTHORS" in C<git help shortlog>
 (L<https://www.kernel.org/pub/software/scm/git/docs/git-shortlog.html>).
+
+Duplicate names that share the same email address will be removed
+automatically (keeping the form associated with the latest commit).
 
 =head1 ADDING CONTRIBUTORS TO POD DOCUMENTATION
 
