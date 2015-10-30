@@ -8,7 +8,7 @@ Dist::Zilla::Plugin::Git::Contributors - Add contributor names from git to your 
 
 =head1 VERSION
 
-version 0.014
+version 0.015
 
 =head1 SYNOPSIS
 
@@ -77,6 +77,9 @@ adding a F<.mailmap> file to your git repository, with entries formatted as
 described in "MAPPING AUTHORS" in C<git help shortlog>
 (L<https://www.kernel.org/pub/software/scm/git/docs/git-shortlog.html>).
 
+Duplicate names that share the same email address will be removed
+automatically (keeping the form associated with the latest commit).
+
 =head1 ADDING CONTRIBUTORS TO POD DOCUMENTATION
 
 You can add the contributor names to your module documentation by using
@@ -90,14 +93,6 @@ This module aims to properly handle non-ascii characters in contributor names.
 However, on Windows you might need to do a bit more: see
 L<https://github.com/msysgit/msysgit/wiki/Git-for-Windows-Unicode-Support> for
 supported versions and extra configurations you may need to apply.
-
-=head1 SUPPORT
-
-=for stopwords irc
-
-Bugs may be submitted through L<the RT bug tracker|https://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-Plugin-Git-Contributors>
-(or L<bug-Dist-Zilla-Plugin-Git-Contributors@rt.cpan.org|mailto:bug-Dist-Zilla-Plugin-Git-Contributors@rt.cpan.org>).
-I am also usually active on irc, as 'ether' at C<irc.perl.org>.
 
 =head1 SEE ALSO
 
@@ -135,17 +130,40 @@ L<Module::Install::Contributors>
 
 =for Pod::Coverage mvp_multivalue_args mvp_aliases metadata
 
+=head1 SUPPORT
+
+Bugs may be submitted through L<the RT bug tracker|https://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-Plugin-Git-Contributors>
+(or L<bug-Dist-Zilla-Plugin-Git-Contributors@rt.cpan.org|mailto:bug-Dist-Zilla-Plugin-Git-Contributors@rt.cpan.org>).
+
+There is also a mailing list available for users of this distribution, at
+L<http://dzil.org/#mailing-list>.
+
+There is also an irc channel available for users of this distribution, at
+irc://irc.perl.org/#distzilla.
+
+I am also usually active on irc, as 'ether' at C<irc.perl.org>.
+
 =head1 AUTHOR
 
 Karen Etheridge <ether@cpan.org>
 
-=head1 CONTRIBUTOR
+=head1 CONTRIBUTORS
 
-=for stopwords Kent Fredric
+=for stopwords Kent Fredric Mohammad S Anwar
+
+=over 4
+
+=item *
 
 Kent Fredric <kentnl@cpan.org>
 
-=head1 COPYRIGHT AND LICENSE
+=item *
+
+Mohammad S Anwar <mohammad.anwar@yahoo.com>
+
+=back
+
+=head1 COPYRIGHT AND LICENCE
 
 This software is copyright (c) 2014 by Karen Etheridge.
 
