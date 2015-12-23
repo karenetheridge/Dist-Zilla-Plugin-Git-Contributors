@@ -108,6 +108,7 @@ sub register_prereqs
     $perl_prereq = version->parse($perl_prereq)->numify;
     return if "$perl_prereq" >= '5.008006';
 
+    # see https://github.com/makamaka/JSON-PP/pull/9 for for details
     $self->log_debug('injecting JSON::PP prereq to deal with non-ascii content in META.json');
     $self->zilla->register_prereqs(
         {
