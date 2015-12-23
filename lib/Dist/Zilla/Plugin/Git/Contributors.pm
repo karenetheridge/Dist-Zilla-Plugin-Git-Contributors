@@ -18,6 +18,7 @@ use Path::Tiny 0.048;
 use Moose::Util::TypeConstraints 'enum';
 use List::UtilsBy 0.04 'uniq_by';
 use Unicode::Collate 0.53;
+use version;
 use namespace::autoclean;
 
 sub mvp_multivalue_args { qw(paths remove) }
@@ -104,6 +105,7 @@ sub register_prereqs
     $self->log_debug([ 'found non-ascii characters in contributor names; perl prereq so far is %s',
         defined $perl_prereq ? $perl_prereq : 'unknown' ]);
     $perl_prereq = 0 if not defined $perl_prereq;
+    $perl_prereq = version->parse($perl_prereq)->numify;
     return if "$perl_prereq" >= '5.008006';
 
     $self->log_debug('injecting JSON::PP prereq to deal with non-ascii content in META.json');
