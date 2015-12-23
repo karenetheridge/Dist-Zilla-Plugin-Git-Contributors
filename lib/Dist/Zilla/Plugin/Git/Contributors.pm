@@ -86,7 +86,14 @@ sub metadata
     +{ x_contributors => $contributors };
 }
 
-sub _contributors
+# should not be called before the MetaProvider phase
+has _contributors => (
+    is => 'ro', isa => 'ArrayRef[Str]',
+    lazy => 1,
+    builder => '_build_contributors',
+);
+
+sub _build_contributors
 {
     my $self = shift;
 
