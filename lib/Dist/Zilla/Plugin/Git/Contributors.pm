@@ -8,7 +8,8 @@ package Dist::Zilla::Plugin::Git::Contributors;
 our $VERSION = '0.016';
 
 use Moose;
-with 'Dist::Zilla::Role::MetaProvider';
+with 'Dist::Zilla::Role::MetaProvider',
+    'Dist::Zilla::Role::PrereqSource';
 
 use List::Util 1.33 'none';
 use Git::Wrapper 0.035;
@@ -84,6 +85,35 @@ sub metadata
 
     $self->_check_podweaver;
     +{ x_contributors => $contributors };
+}
+
+sub register_prereqs
+{
+    my $self = shift;
+
+    return if none { /[^[:ascii:]]/ } @{$self->_contributors};
+
+    my $prereqs = $self->zilla->prereqs;
+    my $perl_prereq = $prereqs->requirements_for(qw(runtime requires))
+        ->clone
+        ->add_requirements($prereqs->requirements_for(qw(configure requires)))
+        ->add_requirements($prereqs->requirements_for(qw(build requires)))
+        ->add_requirements($prereqs->requirements_for(qw(test requires)))
+        ->as_string_hash->{perl};
+
+    $self->log_debug([ 'found non-ascii characters in contributor names; perl prereq so far is %s',
+        defined $perl_prereq ? $perl_prereq : 'unknown' ]);
+    $perl_prereq = 0 if not defined $perl_prereq;
+    return if "$perl_prereq" >= '5.008006';
+
+    $self->log_debug('injecting JSON::PP prereq to deal with non-ascii content in META.json');
+    $self->zilla->register_prereqs(
+        {
+            phase => 'runtime',
+            type  => 'requires',
+        },
+        'JSON::PP' => '2.27300',
+    );
 }
 
 # should not be called before the MetaProvider phase
@@ -302,6 +332,6 @@ supported versions and extra configurations you may need to apply.
 * L<Dist::Zilla::Plugin::ContributorsFromPod> - takes the list of contributors from pod
 * L<Module::Install::Contributors>
 
-=for Pod::Coverage mvp_multivalue_args mvp_aliases metadata
+=for Pod::Coverage mvp_multivalue_args mvp_aliases metadata register_prereqs
 
 =cut

@@ -38,6 +38,7 @@ my $tzil = Builder->from_config(
                 },
                 [ GatherDir => ],
                 [ MetaConfig => ],
+                [ Prereqs => ConfigureRequires => { perl => '5.010' } ],
                 [ 'Git::Contributors' => { include_authors => 1, include_releaser => 0 } ],
             ),
             path(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
@@ -85,6 +86,10 @@ is(
 cmp_deeply(
     $tzil->distmeta,
     superhashof({
+        prereqs => {
+            configure => { requires => { perl => '5.010' } },
+            # here is where we stick runtime prereqs if there are any
+        },
         x_contributors => [
             'Anne O\'Thor <author@example.com>',
             'Dagfinn Ilmari Mannsåker <ilmari@example.org>',
