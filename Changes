@@ -1,6 +1,6 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
-{{$NEXT}}
+0.016     2015-12-23 07:42:21Z (TRIAL RELEASE)
           - inject a prerequisite on JSON::PP 2.27300 if non-ascii characters
             are found in contributor data, to allow for (future) correct
             parsing of META.json

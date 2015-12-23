@@ -8,7 +8,7 @@ Dist::Zilla::Plugin::Git::Contributors - Add contributor names from git to your 
 
 =head1 VERSION
 
-version 0.015
+version 0.016
 
 =head1 SYNOPSIS
 
@@ -128,7 +128,7 @@ L<Module::Install::Contributors>
 
 =back
 
-=for Pod::Coverage mvp_multivalue_args mvp_aliases metadata
+=for Pod::Coverage mvp_multivalue_args mvp_aliases metadata register_prereqs
 
 =head1 SUPPORT
 
@@ -139,7 +139,7 @@ There is also a mailing list available for users of this distribution, at
 L<http://dzil.org/#mailing-list>.
 
 There is also an irc channel available for users of this distribution, at
-irc://irc.perl.org/#distzilla.
+L<irc://irc.perl.org/#distzilla>.
 
 I am also usually active on irc, as 'ether' at C<irc.perl.org>.
 
