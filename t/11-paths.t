@@ -49,7 +49,7 @@ $git->commit({ message => 'second commit', author => 'Anon Y. Moose <anon@null.c
 
 my $test = $root->child('t', 'foo.t');
 $test->parent->mkpath;
-$test->spew("use Test::More\npass('ohhai');\n");
+$test->spew("use Test::More tests => 1;\npass('ohhai');\n");
 $git->add($test->stringify);
 $git->commit({ message => 'third commit', author => 'Foo Bar <foo@bar.com>' });
 
