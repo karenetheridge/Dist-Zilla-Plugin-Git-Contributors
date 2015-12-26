@@ -4,7 +4,7 @@ use warnings;
 # this test demonstrates the recommended configuration settings for
 # multi-author distributions, where the releaser is one of the authors.
 
-use Test::More;
+use Test::More 0.88;
 use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 use Test::DZil;
 use Test::Fatal;

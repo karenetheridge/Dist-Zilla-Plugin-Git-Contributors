@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 use utf8;
-use Test::More;
+use Test::More 0.88;
 use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 use Test::DZil;
 use Test::Fatal;
