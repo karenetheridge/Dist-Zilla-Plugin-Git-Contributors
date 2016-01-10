@@ -12,7 +12,7 @@ use Path::Tiny;
 my $code = path('t', '09-unicode.t')->slurp_utf8;
 
 $code =~ s/perl => '5.010'/perl => '0'/g;
-$code =~ s/^(\s+)(configure => { requires => { perl => '0' } },)$/$1$2\n$1runtime => { requires => { 'JSON::PP' => '2.27300' } },/m;
+$code =~ s/^(\s+)(configure => \{ requires => \{ perl => '0' \} \},)$/$1$2\n$1runtime => { requires => { 'JSON::PP' => '2.27300' } },/m;
 
 eval $code;
 die $@ if $@;
