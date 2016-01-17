@@ -30,11 +30,12 @@ sub no_git_tempdir
                 $in_git = 1;
                 last;
             }
+            last if $dir eq $dir->parent;
             $dir = $dir->parent;
         }
         continue {
             die "too many iterations when traversing $tempdir!"
-                if $count++ > 100;
+                if $count++ > 98;
         }
 
         ok(!$in_git, 'tempdir is not in a real git repository');
