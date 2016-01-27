@@ -23,7 +23,7 @@ sub no_git_tempdir
         my $rootdir = Path::Tiny->rootdir;
         my $dir = $tempdir;
         my $count = 0;
-        while ($dir ne $rootdir and $count < 100) {
+        while ($dir ne $rootdir) {
             my $checkdir = path($dir, '.git');
             if (-d $checkdir) {
                 note "found $checkdir in $tempdir";
@@ -35,7 +35,7 @@ sub no_git_tempdir
         }
         continue {
             die "too many iterations when traversing $tempdir!"
-                if $count++ > 98;
+                if $count++ > 100;
         }
 
         ok(!$in_git, 'tempdir is not in a real git repository');
