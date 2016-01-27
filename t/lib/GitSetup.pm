@@ -20,17 +20,18 @@ sub no_git_tempdir
 
     {
         my $in_git;
-        my $rootdir = Path::Tiny->rootdir;
         my $dir = $tempdir;
         my $count = 0;
-        while ($dir ne $rootdir) {
+        while (not $dir->is_rootdir) {
+            # this should never happen.
+            do { diag "failed to detect that $dir is at the root?!"; last } if $dir eq $dir->parent;
+
             my $checkdir = path($dir, '.git');
             if (-d $checkdir) {
                 note "found $checkdir in $tempdir";
                 $in_git = 1;
                 last;
             }
-            last if $dir eq $dir->parent;
             $dir = $dir->parent;
         }
         continue {
