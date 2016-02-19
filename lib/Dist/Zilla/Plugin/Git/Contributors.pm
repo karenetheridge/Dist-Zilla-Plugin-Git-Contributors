@@ -11,7 +11,7 @@ use Moose;
 with 'Dist::Zilla::Role::MetaProvider',
     'Dist::Zilla::Role::PrereqSource';
 
-use List::Util 1.33 'none';
+use List::Util 1.33 qw(none any);
 use Git::Wrapper 0.035;
 use Try::Tiny;
 use Path::Tiny 0.048;
@@ -109,6 +109,10 @@ sub register_prereqs
     $perl_prereq = 0 if not defined $perl_prereq;
     $perl_prereq = version->parse($perl_prereq)->numify;
     return if "$perl_prereq" >= '5.008006';
+
+    # many Dist::Zilla-using distributions don't have an explicit minimum
+    # perl, but we know that Dist::Zilla doesn't work until 5.8.7
+    return if any { /^Dist::Zilla/ } keys %$all_prereqs;
 
     # if dynamic_config is set, META.json will never be read so we're safe
     return if $self->zilla->distmeta->{dynamic_config};
