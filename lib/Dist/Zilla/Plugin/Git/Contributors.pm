@@ -95,12 +95,14 @@ sub register_prereqs
     return if none { /[^[:ascii:]]/ } @{ $self->_contributors };
 
     my $prereqs = $self->zilla->prereqs;
-    my $perl_prereq = $prereqs->requirements_for(qw(runtime requires))
+    my $all_prereqs = $prereqs->requirements_for(qw(runtime requires))
         ->clone
         ->add_requirements($prereqs->requirements_for(qw(configure requires)))
         ->add_requirements($prereqs->requirements_for(qw(build requires)))
         ->add_requirements($prereqs->requirements_for(qw(test requires)))
-        ->as_string_hash->{perl};
+        ->as_string_hash;
+
+    my $perl_prereq = $all_prereqs->{perl};
 
     $self->log_debug([ 'found non-ascii characters in contributor names; perl prereq so far is %s',
         defined $perl_prereq ? $perl_prereq : 'unknown' ]);
