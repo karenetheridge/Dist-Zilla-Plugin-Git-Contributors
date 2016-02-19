@@ -112,14 +112,7 @@ sub register_prereqs
     return if $self->zilla->distmeta->{dynamic_config};
 
     # see https://github.com/makamaka/JSON-PP/pull/9 for for details
-    $self->log('injecting JSON::PP prereq to deal with non-ascii content in META.json');
-    $self->zilla->register_prereqs(
-        {
-            phase => 'runtime',
-            type  => 'requires',
-        },
-        'JSON::PP' => '2.27300',
-    );
+    $self->log('Warning: distribution has non-ascii characters in contributor names. META.json will be unparsable on perls <= 5.8.6 when JSON::PP is lower than 2.27300');
 }
 
 # should not be called before the MetaProvider phase

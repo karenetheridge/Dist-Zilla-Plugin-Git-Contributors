@@ -12,7 +12,17 @@ use Path::Tiny;
 my $code = path('t', '09-unicode.t')->slurp_utf8;
 
 $code =~ s/perl => '5.010'/perl => '0'/g;
-$code =~ s/^(\s+)(configure => \{ requires => \{ perl => '0' \} \},)$/$1$2\n$1runtime => { requires => { 'JSON::PP' => '2.27300' } },/m;
+
+my $test = <<'CODE';
+cmp_deeply(
+    $tzil->log_messages,
+    superbagof(
+        re(qr/^\[Git::Contributors\] Warning: distribution has non-ascii characters in contributor names. META.json will be unparsable on perls <= 5.8.6 when JSON::PP is lower than 2.27300$/),
+    ),
+    'got a warning about META.json being unparsable on perls <= 5.8.6 with old JSON::PP',
+);
+CODE
+$code =~ s/^(diag 'got log messages: ')/$test\n$1/m;
 
 eval $code;
 die $@ if $@;

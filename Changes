@@ -1,6 +1,8 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
 {{$NEXT}}
+          - remove conditional JSON::PP injection, and replace it with a
+            warning message (RT#112147)
 
 0.018     2016-01-27 02:34:58Z
           - improved testing of git directories under MSWin32 (Klaus Eichner)
