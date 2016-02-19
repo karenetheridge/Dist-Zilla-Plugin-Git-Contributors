@@ -108,6 +108,9 @@ sub register_prereqs
     $perl_prereq = version->parse($perl_prereq)->numify;
     return if "$perl_prereq" >= '5.008006';
 
+    # if dynamic_config is set, META.json will never be read so we're safe
+    return if $self->zilla->distmeta->{dynamic_config};
+
     # see https://github.com/makamaka/JSON-PP/pull/9 for for details
     $self->log('injecting JSON::PP prereq to deal with non-ascii content in META.json');
     $self->zilla->register_prereqs(
