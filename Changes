@@ -1,6 +1,6 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
-{{$NEXT}}
+0.019     2016-02-19 05:44:15Z
           - remove conditional JSON::PP injection, and replace it with a
             warning message (RT#112147)
 
