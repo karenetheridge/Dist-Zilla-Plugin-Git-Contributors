@@ -92,7 +92,7 @@ sub register_prereqs
 {
     my $self = shift;
 
-    return if none { /[^[:ascii:]]/ } @{$self->_contributors};
+    return if none { /[^[:ascii:]]/ } @{ $self->_contributors };
 
     my $prereqs = $self->zilla->prereqs;
     my $perl_prereq = $prereqs->requirements_for(qw(runtime requires))
