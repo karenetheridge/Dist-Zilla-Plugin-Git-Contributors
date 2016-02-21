@@ -1,5 +1,7 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
+{{$NEXT}}
+
 0.020     2016-02-21 04:17:13Z
           - JSON::PP injection is back, as a harmless configure-suggests
 
