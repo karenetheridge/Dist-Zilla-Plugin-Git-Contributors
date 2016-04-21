@@ -8,10 +8,6 @@ use Test::More;
 # target toolchain to be able to deal with non-ascii characters in META.json
 # (not soon enough for the distribution being installed, sadly)
 
-require Dist::Zilla::Plugin::MetaJSON;
-plan skip_all => 'This test is only useful for Dist::Zilla::Plugin::MetaJSON before 5.045'
-    if Dist::Zilla::Plugin::MetaJSON->VERSION < '5.045';
-
 use Path::Tiny;
 my $code = path('t', '09-unicode.t')->slurp_utf8;
 
