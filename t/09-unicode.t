@@ -12,7 +12,7 @@ use Path::Tiny;
 use lib 't/lib';
 use GitSetup;
 
-binmode $_, ':encoding(UTF-8)' foreach map { Test::Builder->new->$_ } qw(output failure_output todo_output);
+binmode Test::More->builder->$_, ':encoding(UTF-8)' foreach qw(output failure_output todo_output);
 binmode STDOUT, ':encoding(UTF-8)';
 binmode STDERR, ':encoding(UTF-8)';
 
