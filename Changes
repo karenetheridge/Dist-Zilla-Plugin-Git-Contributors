@@ -1,5 +1,7 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
+{{$NEXT}}
+
 0.021     2016-04-21 17:25:55Z
           - removed JSON::PP injection if [MetaJSON] is new enough to be
             rendering META.json in ascii mode (5.045)
