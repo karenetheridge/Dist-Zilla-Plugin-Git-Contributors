@@ -92,6 +92,9 @@ sub register_prereqs
 {
     my $self = shift;
 
+    # newer dzil renders META.json in ascii mode
+    return if eval { Dist::Zilla->VERSION('5.045'); 1 };
+
     return if none { /[^[:ascii:]]/ } @{ $self->_contributors };
 
     my $prereqs = $self->zilla->prereqs;
