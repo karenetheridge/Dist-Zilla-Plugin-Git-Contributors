@@ -1,5 +1,7 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
+{{$NEXT}}
+
 0.022     2016-04-22 12:52:07Z
           - the JSON::PP injection is back - we also need to care about what
             CPAN::Meta does with MYMETA.json, which is beyond our ability to
