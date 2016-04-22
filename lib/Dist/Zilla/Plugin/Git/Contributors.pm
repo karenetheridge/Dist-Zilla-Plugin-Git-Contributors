@@ -114,9 +114,6 @@ sub register_prereqs
     # perl, but we know that Dist::Zilla doesn't work until 5.8.7
     return if any { /^Dist::Zilla/ } keys %$all_prereqs;
 
-    # if dynamic_config is set, META.json will never be read so we're safe
-    return if $self->zilla->distmeta->{dynamic_config};
-
     # see https://github.com/makamaka/JSON-PP/pull/9 for for details
     $self->log('Warning: distribution has non-ascii characters in contributor names. META.json will be unparsable on perls <= 5.8.6 when JSON::PP is lower than 2.27300');
 
