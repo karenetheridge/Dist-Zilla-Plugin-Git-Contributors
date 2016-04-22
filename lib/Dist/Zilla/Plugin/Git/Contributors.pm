@@ -114,6 +114,13 @@ sub register_prereqs
     # perl, but we know that Dist::Zilla doesn't work until 5.8.7
     return if any { /^Dist::Zilla/ } keys %$all_prereqs;
 
+    # if dynamic_config is set, the user gets another chance to read the file, via fallback code:
+    # 22:44 < haarg> eumm loads META, updates prereqs, and writes out MYMETA
+    # 22:44 < haarg> so in a working system, x_contributors will be included
+    # 22:45 < haarg> in a broken system, it will fail to load META, regenerate it from parameters including META_ADD/MERGE, then write it out
+    # 22:46 < haarg> so if there isn't any utf8 data in the parameters given to EUMM, it will produce a file that can be read by a "bad" JSON::PP
+    return if $self->zilla->distmeta->{dynamic_config};
+
     # see https://github.com/makamaka/JSON-PP/pull/9 for for details
     $self->log('Warning: distribution has non-ascii characters in contributor names. META.json will be unparsable on perls <= 5.8.6 when JSON::PP is lower than 2.27300');
 
