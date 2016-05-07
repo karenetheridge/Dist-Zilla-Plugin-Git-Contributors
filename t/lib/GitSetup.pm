@@ -45,6 +45,17 @@ sub no_git_tempdir
     return $tempdir;
 }
 
+# adds --no-verify to all 'git commit' commands, to avoid triggering any
+# globally-configured pre-commit hooks.
+{
+    package My::Git::Wrapper;
+    use base 'Git::Wrapper';
+
+    sub commit {
+        return shift->RUN(commit => @_, { 'no-verify' => 1 });
+    }
+}
+
 # does some preliminary setup of the test Git::Wrapper object
 # and a sanity check
 sub git_wrapper
@@ -54,7 +65,7 @@ sub git_wrapper
 
     diag 'testing with git repo ' . $root;
 
-    my $git = Git::Wrapper->new($root);
+    my $git = My::Git::Wrapper->new($root);
     my $version = $git->version;
     my $err = $git->ERR;
     diag explain @$err if @$err;

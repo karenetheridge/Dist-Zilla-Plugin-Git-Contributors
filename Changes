@@ -1,6 +1,7 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
 {{$NEXT}}
+          - fix tests to avoid any user-configured pre-commit hooks
 
 0.022     2016-04-22 12:52:07Z
           - the JSON::PP injection is back - we also need to care about what
