@@ -1,5 +1,7 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
+{{$NEXT}}
+
 0.023     2016-05-07 03:01:07Z
           - fix tests to avoid any user-configured pre-commit hooks
 
