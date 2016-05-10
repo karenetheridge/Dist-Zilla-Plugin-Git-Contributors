@@ -241,6 +241,7 @@ sub _git
 {
     my ($self, $command, @args) = @_;
 
+    die 'no command?!' if not $command;
     my $git = $self->__git;
     my @result = $git->$command(@args);
     my $err = $git->ERR;
