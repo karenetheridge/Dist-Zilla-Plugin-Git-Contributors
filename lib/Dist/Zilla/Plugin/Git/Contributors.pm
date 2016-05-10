@@ -147,6 +147,7 @@ sub _build_contributors
 
     my $in_repo;
     try {
+        # note that ->status does something different.
         $in_repo = $self->_git(RUN => 'status');
     }
     catch {
