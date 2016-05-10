@@ -70,6 +70,7 @@ cmp_deeply(
                             order_by => 'name',
                             paths => ['.'],
                             remove => '...',
+                            'git --version' => ignore,
                         },
                     },
                     name => 'Git::Contributors',
