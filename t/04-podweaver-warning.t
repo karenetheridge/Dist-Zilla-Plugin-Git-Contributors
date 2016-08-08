@@ -8,7 +8,7 @@ use Test::Fatal;
 use Test::Deep;
 use Path::Tiny;
 
-use Test::Requires qw(Dist::Zilla::Plugin::PodWeaver Pod::Weaver::Section::Contributors);
+use Test::Needs qw(Dist::Zilla::Plugin::PodWeaver Pod::Weaver::Section::Contributors);
 
 use lib 't/lib';
 use GitSetup;
