@@ -49,7 +49,7 @@ sub no_git_tempdir
 # globally-configured pre-commit hooks.
 {
     package My::Git::Wrapper;
-    use base 'Git::Wrapper';
+    use parent 'Git::Wrapper';
 
     sub commit {
         return shift->RUN(commit => @_, { 'no-verify' => 1 });
