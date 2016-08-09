@@ -1,6 +1,6 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
-{{$NEXT}}
+0.024     2016-08-09 01:55:19Z
           - include the git version in metadata
 
 0.023     2016-05-07 03:01:07Z
