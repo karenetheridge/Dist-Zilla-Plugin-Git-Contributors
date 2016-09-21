@@ -11,6 +11,7 @@ use Moose;
 with 'Dist::Zilla::Role::MetaProvider',
     'Dist::Zilla::Role::PrereqSource';
 
+use feature 'fc';
 use List::Util 1.33 qw(none any);
 use Git::Wrapper 0.035;
 use Try::Tiny;
@@ -175,7 +176,7 @@ sub _build_contributors
         sub { require Data::Dumper; Data::Dumper->new([ \@contributors ])->Indent(2)->Terse(1)->Dump } ]);
 
     # remove duplicates by email address, keeping the latest associated name
-    @contributors = uniq_by { lc((/(<[^>]+>)/g)[-1]) } @contributors;
+    @contributors = uniq_by { fc((/(<[^>]+>)/g)[-1]) } @contributors;
 
     @contributors = Unicode::Collate->new(level => 1)->sort(@contributors) if $self->order_by eq 'name';
 
@@ -190,7 +191,7 @@ sub _build_contributors
 
     if (not $self->include_releaser and my $releaser = $self->_releaser)
     {
-        @contributors = grep { lc $_ ne lc $releaser } @contributors;
+        @contributors = grep { fc $_ ne fc $releaser } @contributors;
     }
 
     if ($self->remove)
