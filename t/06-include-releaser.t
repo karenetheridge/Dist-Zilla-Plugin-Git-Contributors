@@ -47,11 +47,11 @@ $git->commit({ message => 'second commit', author => $releaser });
 
 $changes->append("- a changelog entry\n");
 $git->add('Changes');
-$git->commit({ message => 'second commit', author => lc $releaser }); # lowercase here
+$git->commit({ message => 'third commit', author => lc $releaser }); # lowercase here
 
 $changes->append("- a changelog entry\n");
 $git->add('Changes');
-$git->commit({ message => 'third commit', author => 'Anon Y. Moose <anon@null.com>' });
+$git->commit({ message => 'fourth commit', author => 'Anon Y. Moose <anon@null.com>' });
 
 $tzil->chrome->logger->set_debug(1);
 is(

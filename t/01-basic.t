@@ -54,12 +54,12 @@ $git->commit({ message => 'third commit', author => 'Foo Bar <foo@bar.com>' });
 # case difference in email
 $changes->append("- another changelog entry\n");
 $git->add('Changes');
-$git->commit({ message => 'third commit', author => 'Foo Bar <Foo@bar.com>' });
+$git->commit({ message => 'fourth commit', author => 'Foo Bar <Foo@bar.com>' });
 
 # case difference in email
 $changes->append("- another changelog entry\n");
 $git->add('Changes');
-$git->commit({ message => 'third commit', author => 'Yon Knight <yknight@example.com>', });
+$git->commit({ message => 'fifth commit', author => 'Yon Knight <yknight@example.com>', });
 
 $tzil->chrome->logger->set_debug(1);
 
