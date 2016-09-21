@@ -33,6 +33,7 @@ my $tzil = Builder->from_config(
 my $root = path($tzil->tempdir)->child('source');
 my $git = git_wrapper($root);
 
+# upper case here
 my $releaser = 'Test User <test@example.com>';
 
 my $changes = $root->child('Changes');
@@ -43,6 +44,10 @@ $git->commit({ message => 'first commit', author => $tzil->authors->[0] });
 $changes->append("- a changelog entry\n");
 $git->add('Changes');
 $git->commit({ message => 'second commit', author => $releaser });
+
+$changes->append("- a changelog entry\n");
+$git->add('Changes');
+$git->commit({ message => 'second commit', author => lc $releaser }); # lowercase here
 
 $changes->append("- a changelog entry\n");
 $git->add('Changes');

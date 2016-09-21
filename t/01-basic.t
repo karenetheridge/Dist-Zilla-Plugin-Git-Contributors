@@ -22,6 +22,7 @@ my $tzil = Builder->from_config(
                         'Anon Y. Moose <anon@null.com>',
                         'Anne O\'Thor <author@example.com>',
                         'Tokuhiro Matsuno <tokuhirom @*(#RJKLFHFSDLJF gmail.com>',
+                        'Yon Knight <yknight@Example.com>',
                     ],
                 },
                 [ GatherDir => ],
@@ -50,6 +51,16 @@ $changes->append("- another changelog entry\n");
 $git->add('Changes');
 $git->commit({ message => 'third commit', author => 'Foo Bar <foo@bar.com>' });
 
+# case difference in email
+$changes->append("- another changelog entry\n");
+$git->add('Changes');
+$git->commit({ message => 'third commit', author => 'Foo Bar <Foo@bar.com>' });
+
+# case difference in email
+$changes->append("- another changelog entry\n");
+$git->add('Changes');
+$git->commit({ message => 'third commit', author => 'Yon Knight <yknight@example.com>', });
+
 $tzil->chrome->logger->set_debug(1);
 
 is(
@@ -62,7 +73,7 @@ cmp_deeply(
     $tzil->distmeta,
     superhashof({
         x_contributors => [
-            'Foo Bar <foo@bar.com>',
+            'Foo Bar <Foo@bar.com>',
             'Hey Jude <jude@example.org>',
         ],
         x_Dist_Zilla => superhashof({

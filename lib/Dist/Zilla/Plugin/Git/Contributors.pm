@@ -175,7 +175,7 @@ sub _build_contributors
         sub { require Data::Dumper; Data::Dumper->new([ \@contributors ])->Indent(2)->Terse(1)->Dump } ]);
 
     # remove duplicates by email address, keeping the latest associated name
-    @contributors = uniq_by { (/(<[^>]+>)/g)[-1] } @contributors;
+    @contributors = uniq_by { lc((/(<[^>]+>)/g)[-1]) } @contributors;
 
     @contributors = Unicode::Collate->new(level => 1)->sort(@contributors) if $self->order_by eq 'name';
 
@@ -184,13 +184,13 @@ sub _build_contributors
         my @author_emails = map { /(<[^>]+>)/g } @{ $self->zilla->authors };
         @contributors = grep {
             my $contributor = $_;
-            none { $contributor =~ /\Q$_\E/ } @author_emails;
+            none { $contributor =~ /\Q$_\E/i } @author_emails;
         } @contributors;
     }
 
     if (not $self->include_releaser and my $releaser = $self->_releaser)
     {
-        @contributors = grep { $_ ne $releaser } @contributors;
+        @contributors = grep { lc $_ ne lc $releaser } @contributors;
     }
 
     if ($self->remove)
