@@ -11,7 +11,6 @@ use Moose;
 with 'Dist::Zilla::Role::MetaProvider',
     'Dist::Zilla::Role::PrereqSource';
 
-use feature 'fc';
 use List::Util 1.33 qw(none any);
 use Git::Wrapper 0.035;
 use Try::Tiny;
@@ -176,7 +175,7 @@ sub _build_contributors
         sub { require Data::Dumper; Data::Dumper->new([ \@contributors ])->Indent(2)->Terse(1)->Dump } ]);
 
     # remove duplicates by email address, keeping the latest associated name
-    @contributors = uniq_by { fc((/(<[^>]+>)/g)[-1]) } @contributors;
+    @contributors = uniq_by { __fc((/(<[^>]+>)/g)[-1]) } @contributors;
 
     @contributors = Unicode::Collate->new(level => 1)->sort(@contributors) if $self->order_by eq 'name';
 
@@ -191,7 +190,7 @@ sub _build_contributors
 
     if (not $self->include_releaser and my $releaser = $self->_releaser)
     {
-        @contributors = grep { fc $_ ne fc $releaser } @contributors;
+        @contributors = grep { __fc($_) ne __fc($releaser) } @contributors;
     }
 
     if ($self->remove)
@@ -253,6 +252,10 @@ sub _git
     return @result;
 }
 
+# use casefolding when available; otherwise, fallback to lower-casing.
+sub __fc { goto ("$]" >= '5.016' ? \&CORE::fc : \&__lc) }
+sub __lc { lc $_[0] }   # not callable via \&CORE::lc
+
 __PACKAGE__->meta->make_immutable;
 __END__
 
@@ -272,6 +275,13 @@ under the C<x_contributors> key.  It takes a minimalist approach to this -- no
 data is stuffed into other locations, including stashes -- if other plugins
 wish to work with this information, they should extract it from the
 distribution metadata.
+
+=for stopwords unicode casefolding
+
+=head1 RECOMMENDED PERL VERSION
+
+This module uses unicode comparison routines as well as casefolding semantics
+(when available); Perl 5.016 is recommended.
 
 =head1 CONFIGURATION OPTIONS
 
