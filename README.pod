@@ -8,7 +8,7 @@ Dist::Zilla::Plugin::Git::Contributors - Add contributor names from git to your 
 
 =head1 VERSION
 
-version 0.025
+version 0.026
 
 =head1 SYNOPSIS
 
@@ -24,6 +24,13 @@ under the C<x_contributors> key.  It takes a minimalist approach to this -- no
 data is stuffed into other locations, including stashes -- if other plugins
 wish to work with this information, they should extract it from the
 distribution metadata.
+
+=for stopwords unicode casefolding
+
+=head1 RECOMMENDED PERL VERSION
+
+This module uses unicode comparison routines as well as casefolding semantics
+(when available); Perl 5.016 is recommended.
 
 =head1 CONFIGURATION OPTIONS
 
