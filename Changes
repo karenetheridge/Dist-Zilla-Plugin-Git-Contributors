@@ -1,6 +1,6 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
-{{$NEXT}}
+0.025     2016-09-22 00:28:04Z
           - uniqueness tests for email addresses are now done
             case-insensitively (Mathhew Horsfall); minimum perl version raised
             to 5.016.
