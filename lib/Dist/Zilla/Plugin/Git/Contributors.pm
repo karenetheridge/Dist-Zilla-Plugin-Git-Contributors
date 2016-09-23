@@ -174,8 +174,15 @@ sub _build_contributors
     $self->log_debug([ 'extracted contributors from git: %s',
         sub { require Data::Dumper; Data::Dumper->new([ \@contributors ])->Indent(2)->Terse(1)->Dump } ]);
 
+    my $fc = "$]" >= '5.016'
+        ? \&CORE::fc
+        : do {
+            $self->log_debug('case-folding not available; falling back to lower-cased comparisons');
+            sub { lc $_[0] }    # not callable via \&CORE::lc
+        };
+
     # remove duplicates by email address, keeping the latest associated name
-    @contributors = uniq_by { __fc((/(<[^>]+>)/g)[-1]) } @contributors;
+    @contributors = uniq_by { $fc->((/(<[^>]+>)/g)[-1]) } @contributors;
 
     @contributors = Unicode::Collate->new(level => 1)->sort(@contributors) if $self->order_by eq 'name';
 
@@ -190,7 +197,7 @@ sub _build_contributors
 
     if (not $self->include_releaser and my $releaser = $self->_releaser)
     {
-        @contributors = grep { __fc($_) ne __fc($releaser) } @contributors;
+        @contributors = grep { $fc->($_) ne $fc->($releaser) } @contributors;
     }
 
     if ($self->remove)
@@ -251,10 +258,6 @@ sub _git
     utf8::decode($_) foreach @result;
     return @result;
 }
-
-# use casefolding when available; otherwise, fallback to lower-casing.
-sub __fc { goto ("$]" >= '5.016' ? \&CORE::fc : \&__lc) }
-sub __lc { lc $_[0] }   # not callable via \&CORE::lc
 
 __PACKAGE__->meta->make_immutable;
 __END__
