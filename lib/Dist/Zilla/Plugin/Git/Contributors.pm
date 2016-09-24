@@ -174,7 +174,7 @@ sub _build_contributors
     $self->log_debug([ 'extracted contributors from git: %s',
         sub { require Data::Dumper; Data::Dumper->new([ \@contributors ])->Indent(2)->Terse(1)->Dump } ]);
 
-    my $fc = "$]" >= '5.016'
+    my $fc = "$]" >= '5.016001'
         ? \&CORE::fc
         : do {
             $self->log_debug('case-folding not available; falling back to lower-cased comparisons');

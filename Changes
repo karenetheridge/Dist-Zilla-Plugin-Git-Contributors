@@ -1,6 +1,7 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
 {{$NEXT}}
+          - fix failures on 5.016000 (broken CORE::* subs; see perl RT#113044)
 
 0.026     2016-09-22 17:36:27Z
           - fall back to lc() when casefolding is not available, which removes
