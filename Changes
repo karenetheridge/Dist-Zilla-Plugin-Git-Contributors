@@ -1,6 +1,8 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
 {{$NEXT}}
+          - add Unicode::Normalize to prereqs -- needed by Unicode::Collate
+            when performing normalizations
 
 0.027     2016-09-24 04:27:18Z
           - fix failures on 5.016000 (broken CORE::* subs; see perl RT#113044)
