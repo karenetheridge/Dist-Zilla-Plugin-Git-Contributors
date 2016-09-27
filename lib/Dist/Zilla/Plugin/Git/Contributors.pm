@@ -145,29 +145,17 @@ sub _build_contributors
 {
     my $self = shift;
 
-    my $in_repo;
-    try {
-        # note that ->status does something different.
-        $in_repo = $self->_git(RUN => 'status');
-    }
-    catch {
-        $self->log(
-            blessed($_) && $_->isa('Git::Wrapper::Exception') ? $_->error : $_
-        );
-    };
+    # note that ->status does something different.
+    return [] if not $self->_git(RUN => 'status');
 
-    return [] if not $in_repo;
-
-    my @data = try {
-        $self->_git(shortlog =>
-            {
-                email => 1,
-                summary => 1,
-                $self->order_by eq 'commits' ? ( numbered => 1 ) : (),
-            },
-            'HEAD', '--', $self->paths,
-        );
-    };
+    my @data = $self->_git(shortlog =>
+        {
+            email => 1,
+            summary => 1,
+            $self->order_by eq 'commits' ? ( numbered => 1 ) : (),
+        },
+        'HEAD', '--', $self->paths,
+    );
 
     my @contributors = map { m/^\s*\d+\s*(.*)$/g; } @data;
 
@@ -250,9 +238,15 @@ sub _git
 
     die 'no command?!' if not $command;
     my $git = $self->__git;
-    my @result = $git->$command(@args);
+    my @result = try {
+        $git->$command(@args);
+    } catch {
+        $self->log(blessed($_) && $_->isa('Git::Wrapper::Exception') ? $_->error : $_);
+        ();
+    };
     my $err = $git->ERR;
-    $self->log(@$err) if @$err;
+    $self->log(@$err) if $err and @$err;
+
     # TODO Git::Wrapper should really be decoding this for us, via a new
     # (defaulting-to-false) utf8 flag
     utf8::decode($_) foreach @result;
