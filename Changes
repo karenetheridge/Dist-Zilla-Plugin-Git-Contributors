@@ -1,6 +1,7 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
 {{$NEXT}}
+          - also include empty (file-less) commits; broken since 0.010
 
 0.028     2016-09-27 01:26:54Z
           - add Unicode::Normalize to prereqs -- needed by Unicode::Collate

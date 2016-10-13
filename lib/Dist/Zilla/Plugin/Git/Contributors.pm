@@ -42,7 +42,7 @@ has order_by => (
 has paths => (
     isa => 'ArrayRef[Str]',
     lazy => 1,
-    default => sub { [ shift->zilla->root . '' ] },
+    default => sub { [] },
     traits => ['Array'],
     handles => { paths => 'elements' },
 );
