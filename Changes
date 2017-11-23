@@ -1,6 +1,7 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
 {{$NEXT}}
+          - avoid triggering GPG hooks during testing (thanks Ioan Rogers!)
 
 0.030     2017-05-12 15:57:35Z
           - remove spaces from config data dumped to META, which parses badly
