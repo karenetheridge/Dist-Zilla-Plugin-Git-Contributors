@@ -8,7 +8,7 @@ Dist::Zilla::Plugin::Git::Contributors - Add contributor names from git to your 
 
 =head1 VERSION
 
-version 0.030
+version 0.031
 
 =head1 SYNOPSIS
 
@@ -156,13 +156,17 @@ Karen Etheridge <ether@cpan.org>
 
 =head1 CONTRIBUTORS
 
-=for stopwords Kent Fredric Klaus Eichner Matthew Horsfall Mohammad S Anwar
+=for stopwords Kent Fredric Ioan Rogers Klaus Eichner Matthew Horsfall Mohammad S Anwar
 
 =over 4
 
 =item *
 
 Kent Fredric <kentnl@cpan.org>
+
+=item *
+
+Ioan Rogers <ioan@dirtysoft.ca>
 
 =item *
 
