@@ -1,6 +1,6 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
-{{$NEXT}}
+0.032     2017-12-06 01:30:30Z
           - fix tests to work on git before 2.0.0, where gpgsign is not
             implemented
 
