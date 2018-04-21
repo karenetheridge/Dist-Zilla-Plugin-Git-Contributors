@@ -173,7 +173,10 @@ sub _build_contributors
 
     if (not $self->include_authors)
     {
-        my @author_emails = map { /(<[^>]+>)/g } @{ $self->zilla->authors };
+        my @authors = $self->zilla->authors;
+        @authors = @{ $authors[0] } if @authors == 1 && ref $authors[0];
+
+        my @author_emails = map { /(<[^>]+>)/g } @authors;
         @contributors = grep {
             my $contributor = $_;
             none { $contributor =~ /\Q$_\E/i } @author_emails;
