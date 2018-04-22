@@ -8,7 +8,7 @@ Dist::Zilla::Plugin::Git::Contributors - Add contributor names from git to your 
 
 =head1 VERSION
 
-version 0.032
+version 0.033
 
 =head1 SYNOPSIS
 
@@ -119,10 +119,6 @@ L<Dist::Zilla::Plugin::Meta::Contributors> - adds an explicit list of names to x
 
 =item *
 
-L<Dist::Zilla::Plugin::ContributorsFile> - takes a list of names from a file
-
-=item *
-
 L<Dist::Zilla::Plugin::ContributorsFromGit> - more dependencies, problematic tests, passes around a lot of extra data in stashes unnecessarily
 
 =item *
@@ -132,6 +128,10 @@ L<Dist::Zilla::Plugin::ContributorsFromPod> - takes the list of contributors fro
 =item *
 
 L<Module::Install::Contributors>
+
+=item *
+
+L<Dist::Zilla::Plugin::ContributorsFile> - adds CONTRIBUTORS file, containing names from x_contributors metadata
 
 =back
 
