@@ -35,4 +35,4 @@ install:
 script:
   - perl Build.PL
   - ./Build
-  - prove -b -r -s $(test-jobs) $(test-files)
+  - prove -b -r -s -j$(test-jobs) $(test-files)
