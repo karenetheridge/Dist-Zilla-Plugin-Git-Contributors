@@ -1,6 +1,8 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
 {{$NEXT}}
+          - also handle $zilla->authors possibly returning a list (as in
+            Dist::Zilla v7)
 
 0.033     2018-04-22 08:48:13Z
           - 'paths' as reported in config metadata is now once again the exact
