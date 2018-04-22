@@ -66,10 +66,7 @@ around dump_config => sub
         include_authors => $self->include_authors ? 1 : 0,
         include_releaser  => $self->include_releaser ? 1 : 0,
         order_by => $self->order_by,
-        paths => [ sort map {
-                     my $p = path($_)->realpath;
-                     ($dist_root->subsumes($p) ? $p->relative($dist_root) : $p)->stringify
-                   } $self->paths ],
+        paths => [ sort $self->paths ],
         $self->remove ? ( remove => '...' ) : (),
         git_version => $self->_git('version'),
         blessed($self) ne __PACKAGE__ ? ( version => $VERSION ) : (),
