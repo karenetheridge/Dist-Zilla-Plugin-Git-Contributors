@@ -173,8 +173,7 @@ sub _build_contributors
 
     if (not $self->include_authors)
     {
-        my @authors = $self->zilla->authors;
-        @authors = @{ $authors[0] } if @authors == 1 && ref $authors[0];
+        my @authors = eval { Dist::Zilla->VERSION('7.000') } ? $self->zilla->authors : @{ $self->zilla->authors };
 
         my @author_emails = map { /(<[^>]+>)/g } @authors;
         @contributors = grep {
