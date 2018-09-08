@@ -157,7 +157,11 @@ sub _build_contributors
     my @contributors = map { m/^\s*\d+\s*(.*)$/g; } @data;
 
     $self->log_debug([ 'extracted contributors from git: %s',
-        sub { require Data::Dumper; Data::Dumper->new([ \@contributors ])->Indent(2)->Terse(1)->Dump } ]);
+        sub {
+            require Data::Dumper;
+            chomp(my $str = Data::Dumper->new([ \@contributors ])->Indent(2)->Terse(1)->Dump);
+            $str;
+        } ]);
 
     my $fc = "$]" >= '5.016001'
         ? \&CORE::fc

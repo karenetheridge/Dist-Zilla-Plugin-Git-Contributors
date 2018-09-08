@@ -1,6 +1,7 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
 {{$NEXT}}
+          - extra newline chomped in debugging output
 
 0.034     2018-04-22 08:59:29Z
           - also handle $zilla->authors possibly returning a list (as in
