@@ -1,5 +1,7 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
+{{$NEXT}}
+
 0.035     2018-09-08 17:38:51Z
           - extra newline chomped in debugging output
           - fix minimum version of Git::Wrapper required in tests (RT#127045)
