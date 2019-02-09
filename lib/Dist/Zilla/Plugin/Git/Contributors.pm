@@ -154,7 +154,7 @@ sub _build_contributors
         'HEAD', '--', $self->paths,
     );
 
-    my @contributors = map { m/^\s*\d+\s*(.*)$/g; } @data;
+    my @contributors = map m/^\s*\d+\s*(.*)$/g, @data;
 
     $self->log_debug([ 'extracted contributors from git: %s',
         sub {
@@ -179,7 +179,7 @@ sub _build_contributors
     {
         my @authors = eval { Dist::Zilla->VERSION('7.000') } ? $self->zilla->authors : @{ $self->zilla->authors };
 
-        my @author_emails = map { /(<[^>]+>)/g } @authors;
+        my @author_emails = map /(<[^>]+>)/g, @authors;
         @contributors = grep {
             my $contributor = $_;
             none { $contributor =~ /\Q$_\E/i } @author_emails;
@@ -188,7 +188,7 @@ sub _build_contributors
 
     if (not $self->include_releaser and my $releaser = $self->_releaser)
     {
-        @contributors = grep { $fc->($_) ne $fc->($releaser) } @contributors;
+        @contributors = grep $fc->($_) ne $fc->($releaser), @contributors;
     }
 
     if ($self->remove)
