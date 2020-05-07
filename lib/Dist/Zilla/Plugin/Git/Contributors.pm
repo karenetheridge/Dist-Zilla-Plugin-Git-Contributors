@@ -358,7 +358,8 @@ supported versions and extra configurations you may need to apply.
 * L<How I'm using Dist::Zilla to give credit to contributors|http://www.dagolden.com/index.php/1921/how-im-using-distzilla-to-give-credit-to-contributors/>
 * L<Pod::Weaver::Section::Contributors> - weaves x_contributors data into a pod section
 * L<Dist::Zilla::Plugin::Meta::Contributors> - adds an explicit list of names to x_contributors
-* L<Dist::Zilla::Plugin::ContributorsFromGit> - more dependencies, problematic tests, passes around a lot of extra data in stashes unnecessarily
+* L<Dist::Zilla::Plugin::ContributorsFromGit> - more dependencies, problematic tests, passes around a lot of extra
+  data in stashes unnecessarily, not unicode-clean
 * L<Dist::Zilla::Plugin::ContributorsFromPod> - takes the list of contributors from pod
 * L<Module::Install::Contributors>
 * L<Dist::Zilla::Plugin::ContributorsFile> - adds CONTRIBUTORS file, containing names from x_contributors metadata
