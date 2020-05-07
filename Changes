@@ -1,6 +1,7 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
 {{$NEXT}}
+          - minor documentation and tooling updates
 
 0.035     2018-09-08 17:38:51Z
           - extra newline chomped in debugging output
