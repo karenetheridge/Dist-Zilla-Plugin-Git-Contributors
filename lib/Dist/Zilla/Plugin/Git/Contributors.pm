@@ -149,19 +149,13 @@ sub _build_contributors
         {
             email => 1,
             summary => 1,
-            $self->order_by eq 'commits' ? ( numbered => 1 ) : (),
+            numbered => 1,
         },
         'HEAD', '--', $self->paths,
     );
 
-    my @contributors = map m/^\s*\d+\s*(.*)$/g, @data;
-
-    $self->log_debug([ 'extracted contributors from git: %s',
-        sub {
-            require Data::Dumper;
-            chomp(my $str = Data::Dumper->new([ \@contributors ])->Indent(2)->Terse(1)->Dump);
-            $str;
-        } ]);
+    # [ count, email ]
+    my @counts_and_contributors = map [ split ' ', $_, 2 ], @data;
 
     my $fc = "$]" >= '5.016001'
         ? \&CORE::fc
@@ -171,9 +165,30 @@ sub _build_contributors
         };
 
     # remove duplicates by email address, keeping the latest associated name
-    @contributors = uniq_by { $fc->((/(<[^>]+>)/g)[-1]) } @contributors;
+    my $count = @counts_and_contributors;
+    @counts_and_contributors = uniq_by { $fc->(($_->[1] =~ /(<[^>]+>)/g)[-1]) } @counts_and_contributors;
 
-    @contributors = Unicode::Collate->new(level => 1)->sort(@contributors) if $self->order_by eq 'name';
+    $self->log('multiple names with the same email found: you may want to use a .mailmap file (https://www.kernel.org/pub/software/scm/git/docs/git-shortlog.html#_mapping_authors)') if @counts_and_contributors != $count;
+
+    # sort by name or count depending on choice (numeric descending, name ascending)
+    my $Collator = Unicode::Collate->new(level => 1);
+
+    my $sort_sub =
+        $self->order_by eq 'name' ? sub { $Collator->cmp($a->[1], $b->[1]) }
+      : $self->order_by eq 'commits' ? sub { $b->[0] <=> $a->[0] || $Collator->cmp($a->[1], $b->[1]) }
+      : die 'unrecognized option order_by=', $self->order_by;
+
+    my @contributors =
+      map $_->[1],
+      sort $sort_sub
+      @counts_and_contributors;
+
+    $self->log_debug([ 'extracted contributors from git: %s',
+        sub {
+            require Data::Dumper;
+            chomp(my $str = Data::Dumper->new([ \@contributors ])->Indent(2)->Terse(1)->Dump);
+            $str;
+        } ]);
 
     if (not $self->include_authors)
     {
