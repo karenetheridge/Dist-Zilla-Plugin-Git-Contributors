@@ -321,7 +321,10 @@ I<You should almost certainly not need this.>
 
 Available since version 0.011.
 
-Any contributor entry matching this regular expression is removed from inclusion.
+=for stopwords unanchored
+
+Any contributor entry matching this (unanchored, case-sensitive) regular expression is removed
+from inclusion.
 Can be used more than once.
 
 =for stopwords canonicalizing
