@@ -1,6 +1,6 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
-{{$NEXT}}
+0.036     2020-12-24 19:08:06Z
           - minor documentation and tooling updates
           - sort by name as well as commit count, for consistent results
             across builds

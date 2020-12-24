@@ -8,7 +8,7 @@ Dist::Zilla::Plugin::Git::Contributors - Add contributor names from git to your 
 
 =head1 VERSION
 
-version 0.035
+version 0.036
 
 =head1 SYNOPSIS
 
@@ -70,7 +70,10 @@ I<You should almost certainly not need this.>
 
 Available since version 0.011.
 
-Any contributor entry matching this regular expression is removed from inclusion.
+=for stopwords unanchored
+
+Any contributor entry matching this (unanchored, case-sensitive) regular expression is removed
+from inclusion.
 Can be used more than once.
 
 =for stopwords canonicalizing
@@ -119,7 +122,7 @@ L<Dist::Zilla::Plugin::Meta::Contributors> - adds an explicit list of names to x
 
 =item *
 
-L<Dist::Zilla::Plugin::ContributorsFromGit> - more dependencies, problematic tests, passes around a lot of extra data in stashes unnecessarily
+L<Dist::Zilla::Plugin::ContributorsFromGit> - more dependencies, problematic tests, passes around a lot of extra data in stashes unnecessarily, not unicode-clean
 
 =item *
 
@@ -148,7 +151,7 @@ L<http://dzil.org/#mailing-list>.
 There is also an irc channel available for users of this distribution, at
 L<C<#distzilla> on C<irc.perl.org>|irc://irc.perl.org/#distzilla>.
 
-I am also usually active on irc, as 'ether' at C<irc.perl.org>.
+I am also usually active on irc, as 'ether' at C<irc.perl.org> and C<irc.freenode.org>.
 
 =head1 AUTHOR
 
@@ -156,13 +159,21 @@ Karen Etheridge <ether@cpan.org>
 
 =head1 CONTRIBUTORS
 
-=for stopwords Kent Fredric Matthew Horsfall Mohammad S Anwar Ricardo Signes Klaus Eichner Ioan Rogers
+=for stopwords Kent Fredric Ioan Rogers Klaus Eichner Matthew Horsfall Mohammad S Anwar Ricardo Signes
 
 =over 4
 
 =item *
 
 Kent Fredric <kentnl@cpan.org>
+
+=item *
+
+Ioan Rogers <ioan@dirtysoft.ca>
+
+=item *
+
+Klaus Eichner <klaus03@gmail.com>
 
 =item *
 
@@ -175,14 +186,6 @@ Mohammad S Anwar <mohammad.anwar@yahoo.com>
 =item *
 
 Ricardo Signes <rjbs@cpan.org>
-
-=item *
-
-Klaus Eichner <klaus03@gmail.com>
-
-=item *
-
-Ioan Rogers <ioan@dirtysoft.ca>
 
 =back
 
