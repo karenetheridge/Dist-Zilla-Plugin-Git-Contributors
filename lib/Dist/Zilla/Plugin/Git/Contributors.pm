@@ -5,7 +5,7 @@ package Dist::Zilla::Plugin::Git::Contributors;
 # ABSTRACT: Add contributor names from git to your distribution
 # KEYWORDS: plugin distribution metadata git contributors authors commits
 
-our $VERSION = '0.036';
+our $VERSION = '0.037';
 
 use Moose;
 with 'Dist::Zilla::Role::MetaProvider',
