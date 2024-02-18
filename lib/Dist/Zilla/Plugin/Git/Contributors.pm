@@ -164,13 +164,24 @@ sub _build_contributors
             sub { lc $_[0] }    # not callable via \&CORE::lc
         };
 
-    # remove duplicates by email address, keeping the latest associated name
-    my $count = @counts_and_contributors;
-    @counts_and_contributors = uniq_by { $fc->(($_->[1] =~ /(<[^>]+>)/g)[-1]) } @counts_and_contributors;
+    my %seen_email;
+    ++$seen_email{$fc->(($_->[1] =~ /<([^>]+)>/g)[-1])} foreach @counts_and_contributors;
+    if (my @duplicate_emails = grep $seen_email{$_} > 1, keys %seen_email) {
+      $self->log('multiple names with the same email found: you may want to use a .mailmap file (https://www.kernel.org/pub/software/scm/git/docs/git-shortlog.html#_mapping_authors):',
+        join("\n", '', map '  '.$_, @duplicate_emails));
+    }
 
-    $self->log('multiple names with the same email found: you may want to use a .mailmap file (https://www.kernel.org/pub/software/scm/git/docs/git-shortlog.html#_mapping_authors)') if @counts_and_contributors != $count;
+    my %seen_name;
+    ++$seen_name{$fc->(($_->[1] =~ /^([^<]+) </g)[-1])} foreach @counts_and_contributors;
+    if (my @duplicate_names = grep $seen_name{$_} > 1, keys %seen_name) {
+      $self->log('multiple emails with the same name found: you may want to use a .mailmap file (https://www.kernel.org/pub/software/scm/git/docs/git-shortlog.html#_mapping_authors):',
+        join("\n", '', map '  '.$_, @duplicate_names));
+    }
 
-    # sort by name or count depending on choice (numeric descending, name ascending)
+    # remove duplicates by email address, keeping the first associated name
+    @counts_and_contributors = uniq_by { $fc->(($_->[1] =~ /<([^>]+)>/g)[-1]) } @counts_and_contributors;
+
+    # sort by name (ascending) or count (descending) depending on choice
     my $Collator = Unicode::Collate->new(level => 1);
 
     my $sort_sub =

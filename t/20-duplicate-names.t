@@ -36,7 +36,7 @@ my $git = git_wrapper($root);
 my $changes = $root->child('Changes');
 $changes->spew("Release history for my dist\n\n");
 $git->add('Changes');
-$git->commit({ message => 'first commit', author => 't0m <bobtfish@cpan.org>' });
+$git->commit({ message => 'first commit', author => 'Tomas Doran <t0m@bobtfish.org>' });
 
 $changes->append("- a changelog entry\n");
 $git->add('Changes');
@@ -48,7 +48,7 @@ $git->commit({ message => 'third commit', author => 'Suzie Homemaker <suzie@cpan
 
 $changes->append("- a changelog entry\n");
 $git->add('Changes');
-$git->commit({ message => 'fourth commit', author => 'silly me <suzie@cpan.org>' });
+$git->commit({ message => 'fourth commit', author => 'Suzie Homemaker <me@suzie.org>' });
 
 $tzil->chrome->logger->set_debug(1);
 
@@ -62,8 +62,10 @@ cmp_deeply(
     $tzil->distmeta,
     superhashof({
         x_contributors => [
+            'Suzie Homemaker <me@suzie.org>',
             'Suzie Homemaker <suzie@cpan.org>',
             'Tomas Doran <bobtfish@cpan.org>',
+            'Tomas Doran <t0m@bobtfish.org>',
         ],
         x_Dist_Zilla => superhashof({
             plugins => supersetof(
@@ -87,7 +89,7 @@ cmp_deeply(
 cmp_deeply(
     $tzil->log_messages,
     superbagof(
-        re(qr/^\[Git::Contributors\] multiple names with the same email found/),
+        re(qr/^\[Git::Contributors\] multiple emails with the same name found/),
     ),
     'got a warning about duplicate names',
 );
@@ -96,3 +98,4 @@ diag 'got log messages: ', explain $tzil->log_messages
     if not Test::Builder->new->is_passing;
 
 done_testing;
+
