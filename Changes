@@ -1,6 +1,6 @@
 Revision history for Dist-Zilla-Plugin-Git-Contributors
 
-{{$NEXT}}
+0.039     2026-02-27 01:49:00Z
           - fixed "remove" option to actually behave like a regex, as
             documented (RT#173385)
 
