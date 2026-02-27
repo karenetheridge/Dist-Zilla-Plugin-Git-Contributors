@@ -220,7 +220,7 @@ sub _build_contributors
     if ($self->remove)
     {
         @contributors = grep {
-            my $contributor = $_; none { $contributor =~ /\Q$_\E/ } $self->remove
+            my $contributor = $_; none { $contributor =~ /$_/u } $self->remove
         } @contributors;
     }
 
@@ -349,8 +349,8 @@ Available since version 0.011.
 
 =for stopwords unanchored
 
-Any contributor entry matching this (unanchored, case-sensitive) regular expression is removed
-from inclusion.
+Any contributor entry matching this (unanchored, case-sensitive, unicode semantics) regular
+expression is removed from inclusion.
 Can be used more than once.
 
 =for stopwords canonicalizing

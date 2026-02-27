@@ -26,7 +26,7 @@ my $tzil = Builder->from_config(
                 },
                 [ GatherDir => ],
                 [ MetaConfig => ],
-                [ 'Git::Contributors' => { remove => 'foo' } ],
+                [ 'Git::Contributors' => { remove => 'f.o' } ],
             ),
             path(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
         },
